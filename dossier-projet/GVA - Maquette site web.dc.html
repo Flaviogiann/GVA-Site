@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#E9EBEF; font-family:Inter,-apple-system,Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:#0B1F3A; text-decoration:none; }
+  a:hover { color:#E4002B; }
+  @keyframes halo { 0%{box-shadow:0 0 0 0 rgba(255,255,255,.55)} 70%{box-shadow:0 0 0 18px rgba(255,255,255,0)} 100%{box-shadow:0 0 0 0 rgba(255,255,255,0)} }
+</style>
+</helmet>
+
+<div style="padding:80px 96px 140px;display:flex;flex-direction:column;gap:120px;background:#E9EBEF;color:#0B1F3A">
+
+  <div style="display:flex;flex-direction:column;gap:14px;max-width:900px">
+    <div style="font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;color:#E4002B">Maquette — page unique</div>
+    <div style="font-size:52px;font-weight:600;letter-spacing:-.02em;line-height:1.05">GVA — Genève Aéroport</div>
+    <div style="font-size:17px;line-height:1.6;color:#5A6472">Site web public. Desktop 1440 px, variante mobile 390 px par section. Grille 12 colonnes, gouttière 24 px, marges 96 px. Coins 12–16 px, ombres très légères.</div>
+  </div>
+
+  <!-- 00 DESIGN SYSTEM -->
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#5A6472">00 · Design system</div>
+    <div style="width:1440px;background:#F7F8FA;border-radius:16px;box-shadow:0 2px 14px rgba(11,31,58,.07);padding:64px 72px;display:flex;flex-direction:column;gap:56px">
+
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#5A6472">Couleurs</div>
+        <div style="display:flex;gap:24px">
+          <div style="width:220px"><div style="height:110px;border-radius:14px;background:#F7F8FA;border:1px solid #DDE1E8"></div><div style="margin-top:10px;font-size:14px;font-weight:600">Blanc cassé</div><div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472">#F7F8FA</div></div>
+          <div style="width:220px"><div style="height:110px;border-radius:14px;background:#0B1F3A"></div><div style="margin-top:10px;font-size:14px;font-weight:600">Bleu nuit</div><div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472">#0B1F3A</div></div>
+          <div style="width:220px"><div style="height:110px;border-radius:14px;background:#E4002B"></div><div style="margin-top:10px;font-size:14px;font-weight:600">Accent</div><div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472">#E4002B</div></div>
+          <div style="width:220px"><div style="height:110px;border-radius:14px;background:#5A6472"></div><div style="margin-top:10px;font-size:14px;font-weight:600">Gris texte</div><div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472">#5A6472</div></div>
+          <div style="width:220px"><div style="height:110px;border-radius:14px;background:#FFFFFF;border:1px solid #DDE1E8"></div><div style="margin-top:10px;font-size:14px;font-weight:600">Surface</div><div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472">#FFFFFF</div></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:64px">
+        <div style="flex:1;display:flex;flex-direction:column;gap:18px">
+          <div style="font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#5A6472">Échelle typographique — Inter</div>
+          <div style="display:flex;align-items:baseline;gap:20px"><span style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;width:96px">D1 · 72/600</span><span style="font-size:72px;font-weight:600;letter-spacing:-.03em;line-height:1">Bienvenue</span></div>
+          <div style="display:flex;align-items:baseline;gap:20px"><span style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;width:96px">H1 · 44/600</span><span style="font-size:44px;font-weight:600;letter-spacing:-.02em">Explorez l'aéroport</span></div>
+          <div style="display:flex;align-items:baseline;gap:20px"><span style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;width:96px">H2 · 28/600</span><span style="font-size:28px;font-weight:600">Vos vols en temps réel</span></div>
+          <div style="display:flex;align-items:baseline;gap:20px"><span style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;width:96px">Corps · 17/400</span><span style="font-size:17px;line-height:1.6;color:#5A6472">Paragraphe courant, interligne 1.6</span></div>
+          <div style="display:flex;align-items:baseline;gap:20px"><span style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;width:96px">Label · 12/600</span><span style="font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase">Infos pratiques</span></div>
+        </div>
+
+        <div style="width:520px;display:flex;flex-direction:column;gap:18px">
+          <div style="font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#5A6472">Boutons — défaut / hover / actif</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start">
+            <div style="height:48px;border-radius:12px;background:#0B1F3A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500">Mon vol</div>
+            <div style="height:48px;border-radius:12px;background:#12305A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;box-shadow:0 6px 18px rgba(11,31,58,.22)">Mon vol</div>
+            <div style="height:48px;border-radius:12px;background:#E4002B;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500">Mon vol</div>
+            <div style="height:48px;border-radius:12px;border:1px solid #0B1F3A;color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500">Voir le plan</div>
+            <div style="height:48px;border-radius:12px;border:1px solid #0B1F3A;background:rgba(11,31,58,.06);color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500">Voir le plan</div>
+            <div style="height:48px;border-radius:12px;border:1px solid #E4002B;background:rgba(228,0,43,.08);color:#E4002B;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500">Voir le plan</div>
+            <div style="height:48px;border-radius:12px;color:#5A6472;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500">En savoir plus</div>
+            <div style="height:48px;border-radius:12px;background:rgba(90,100,114,.1);color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500">En savoir plus</div>
+            <div style="height:48px;border-radius:12px;color:#E4002B;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;text-decoration:underline">En savoir plus</div>
+          </div>
+          <div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472">primaire · secondaire · ghost — hauteur 48, rayon 12, padding 0 24</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:64px">
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div style="font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#5A6472">Pastille hotspot</div>
+          <div style="display:flex;gap:36px;align-items:center;background:#0B1F3A;padding:28px 36px;border-radius:14px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:10px"><div style="width:40px;height:40px;border-radius:50%;background:#fff;color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">3</div><div style="font:11px ui-monospace,Menlo,monospace;color:#8FA6C4">défaut</div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:10px"><div style="display:flex;align-items:center;gap:10px"><div style="width:48px;height:48px;border-radius:50%;background:#fff;color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600;box-shadow:0 0 0 8px rgba(255,255,255,.18)">3</div><div style="background:#fff;border-radius:10px;padding:8px 12px;font-size:13px;font-weight:500;white-space:nowrap">Duty Free</div></div><div style="font:11px ui-monospace,Menlo,monospace;color:#8FA6C4">hover + tooltip</div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:10px"><div style="width:40px;height:40px;border-radius:50%;background:#E4002B;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">3</div><div style="font:11px ui-monospace,Menlo,monospace;color:#8FA6C4">actif</div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:10px"><div style="width:40px;height:40px;border-radius:50%;background:#fff;color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;animation:halo 2.4s ease-out infinite">3</div><div style="font:11px ui-monospace,Menlo,monospace;color:#8FA6C4">halo pulsant</div></div>
+          </div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:18px">
+          <div style="font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#5A6472">Champs de formulaire</div>
+          <div style="display:flex;gap:20px;align-items:flex-end">
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#5A6472;margin-bottom:8px">Numéro de vol</div><div style="height:48px;border-radius:12px;border:1px solid #DDE1E8;background:#fff;display:flex;align-items:center;padding:0 16px;font-size:15px;color:#9AA3B0">LX 1234</div></div>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#5A6472;margin-bottom:8px">Focus</div><div style="height:48px;border-radius:12px;border:1.5px solid #0B1F3A;background:#fff;display:flex;align-items:center;padding:0 16px;font-size:15px">LX 1<span style="width:1px;height:18px;background:#E4002B;margin-left:2px"></span></div></div>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#5A6472;margin-bottom:8px">Erreur</div><div style="height:48px;border-radius:12px;border:1.5px solid #E4002B;background:#fff;display:flex;align-items:center;padding:0 16px;font-size:15px;color:#0B1F3A">LX 99</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 01–04 HERO -->
+  <div style="display:flex;flex-direction:column;gap:32px">
+    <div style="font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#5A6472">01–04 · Hero vidéo scrubbée au scroll</div>
+
+    <div style="display:flex;gap:32px;align-items:flex-start">
+      <div>
+        <div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;margin-bottom:10px">01 · Hero-00%</div>
+        <div style="width:1440px;height:900px;border-radius:16px;overflow:hidden;position:relative;background:repeating-linear-gradient(135deg,#C9D2DE 0 14px,#D6DDE7 14px 28px);box-shadow:0 2px 14px rgba(11,31,58,.07)">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:11px ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#7A8494">photo — vue aérienne des pistes · frame vidéo 00%</div>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,31,58,.55) 0%,rgba(11,31,58,.15) 40%,rgba(11,31,58,.65) 100%)"></div>
+          <div style="position:absolute;top:0;left:0;right:0;height:88px;display:flex;align-items:center;padding:0 96px;gap:56px;color:#fff">
+            <div style="font-size:17px;font-weight:600;letter-spacing:-.01em;white-space:nowrap">GVA <span style="color:#E4002B">—</span> Genève Aéroport</div>
+            <div style="flex:1;display:flex;gap:36px;justify-content:center;font-size:15px;font-weight:500">
+              <span>Vols</span><span>Services</span><span>Accès &amp; Parking</span><span>Boutiques</span><span>Infos pratiques</span>
+            </div>
+            <div style="display:flex;gap:20px;align-items:center">
+              <div style="font-size:14px;font-weight:500"><span style="font-weight:600">FR</span><span style="opacity:.5"> / EN</span></div>
+              <div style="height:44px;padding:0 22px;border-radius:12px;background:#fff;color:#0B1F3A;display:flex;align-items:center;font-size:15px;font-weight:500">Mon vol</div>
+            </div>
+          </div>
+          <div style="position:absolute;left:96px;bottom:190px;color:#fff;max-width:820px">
+            <div style="font-size:14px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#E4002B;margin-bottom:20px">Genève</div>
+            <div style="font-size:88px;font-weight:600;letter-spacing:-.035em;line-height:1">Bienvenue à Genève</div>
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:96px;display:flex;flex-direction:column;align-items:center;gap:12px;color:#fff">
+            <div style="font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">Scrollez pour découvrir</div>
+            <div style="font-size:22px;line-height:1">↓</div>
+          </div>
+          <div style="position:absolute;left:96px;right:96px;bottom:48px;height:3px;border-radius:2px;background:rgba(255,255,255,.28)"><div style="width:2%;height:100%;border-radius:2px;background:#fff"></div></div>
+        </div>
+      </div>
+      <div style="width:320px;border:1px dashed #E4002B;border-radius:12px;padding:16px 18px;background:#FFF4F6;font:12px/1.7 ui-monospace,Menlo,monospace;color:#0B1F3A">
+        <div style="font-weight:700;margin-bottom:8px">Annotation — Hero</div>
+        scroll (0→2000px) → currentTime vidéo mappé linéairement → durée = distance de scroll<br><br>
+        titre : cross-fade 240ms ease-out à chaque palier (0 / 33 / 66 / 100 %)<br><br>
+        indicateur « Scrollez » : fade-out 200ms dès scrollY &gt; 40px
+      </div>
+    </div>
+
+    <div style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap">
+      <div>
+        <div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;margin-bottom:10px">02 · Hero-33%</div>
+        <div style="width:1440px;height:900px;border-radius:16px;overflow:hidden;position:relative;background:repeating-linear-gradient(135deg,#BFC9D8 0 14px,#CCD5E1 14px 28px);box-shadow:0 2px 14px rgba(11,31,58,.07)">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:11px ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#7A8494">photo — terminal, façade vitrée · frame vidéo 33%</div>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,31,58,.5) 0%,rgba(11,31,58,.12) 40%,rgba(11,31,58,.62) 100%)"></div>
+          <div style="position:absolute;top:0;left:0;right:0;height:88px;display:flex;align-items:center;padding:0 96px;gap:56px;color:#fff">
+            <div style="font-size:17px;font-weight:600;white-space:nowrap">GVA <span style="color:#E4002B">—</span> Genève Aéroport</div>
+            <div style="flex:1;display:flex;gap:36px;justify-content:center;font-size:15px;font-weight:500"><span>Vols</span><span>Services</span><span>Accès &amp; Parking</span><span>Boutiques</span><span>Infos pratiques</span></div>
+            <div style="display:flex;gap:20px;align-items:center"><div style="font-size:14px;font-weight:500"><span style="font-weight:600">FR</span><span style="opacity:.5"> / EN</span></div><div style="height:44px;padding:0 22px;border-radius:12px;background:#fff;color:#0B1F3A;display:flex;align-items:center;font-size:15px;font-weight:500">Mon vol</div></div>
+          </div>
+          <div style="position:absolute;left:96px;bottom:190px;color:#fff;max-width:900px"><div style="font-size:88px;font-weight:600;letter-spacing:-.035em;line-height:1">Votre porte vers le monde</div></div>
+          <div style="position:absolute;left:96px;right:96px;bottom:48px;height:3px;border-radius:2px;background:rgba(255,255,255,.28)"><div style="width:33%;height:100%;border-radius:2px;background:#fff"></div></div>
+        </div>
+      </div>
+      <div style="width:320px;border:1px dashed #E4002B;border-radius:12px;padding:16px 18px;background:#FFF4F6;font:12px/1.7 ui-monospace,Menlo,monospace;color:#0B1F3A">
+        <div style="font-weight:700;margin-bottom:8px">Annotation</div>
+        navbar reste transparente sur toute la durée du scrub ; passe en fond blanc (blur 12px) uniquement après la bascule
+      </div>
+    </div>
+
+    <div style="display:flex;gap:32px;align-items:flex-start">
+      <div>
+        <div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;margin-bottom:10px">03 · Hero-66%</div>
+        <div style="width:1440px;height:900px;border-radius:16px;overflow:hidden;position:relative;background:repeating-linear-gradient(135deg,#B6C1D2 0 14px,#C3CEDC 14px 28px);box-shadow:0 2px 14px rgba(11,31,58,.07)">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:11px ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#7A8494">photo — avion en roulage, tarmac · frame vidéo 66%</div>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,31,58,.5) 0%,rgba(11,31,58,.12) 40%,rgba(11,31,58,.62) 100%)"></div>
+          <div style="position:absolute;top:0;left:0;right:0;height:88px;display:flex;align-items:center;padding:0 96px;gap:56px;color:#fff">
+            <div style="font-size:17px;font-weight:600;white-space:nowrap">GVA <span style="color:#E4002B">—</span> Genève Aéroport</div>
+            <div style="flex:1;display:flex;gap:36px;justify-content:center;font-size:15px;font-weight:500"><span>Vols</span><span>Services</span><span>Accès &amp; Parking</span><span>Boutiques</span><span>Infos pratiques</span></div>
+            <div style="display:flex;gap:20px;align-items:center"><div style="font-size:14px;font-weight:500"><span style="font-weight:600">FR</span><span style="opacity:.5"> / EN</span></div><div style="height:44px;padding:0 22px;border-radius:12px;background:#fff;color:#0B1F3A;display:flex;align-items:center;font-size:15px;font-weight:500">Mon vol</div></div>
+          </div>
+          <div style="position:absolute;left:96px;bottom:190px;color:#fff"><div style="font-size:88px;font-weight:600;letter-spacing:-.035em;line-height:1">180 destinations</div><div style="font-size:19px;color:rgba(255,255,255,.8);margin-top:20px">Vers 140 villes, en direct, toute l'année.</div></div>
+          <div style="position:absolute;left:96px;right:96px;bottom:48px;height:3px;border-radius:2px;background:rgba(255,255,255,.28)"><div style="width:66%;height:100%;border-radius:2px;background:#fff"></div></div>
+        </div>
+      </div>
+      <div style="width:320px;border:1px dashed #E4002B;border-radius:12px;padding:16px 18px;background:#FFF4F6;font:12px/1.7 ui-monospace,Menlo,monospace;color:#0B1F3A">
+        <div style="font-weight:700;margin-bottom:8px">Annotation</div>
+        barre de progression : largeur = scrollProgress × 100 %, transition linéaire, aucune interpolation
+      </div>
+    </div>
+
+    <div style="display:flex;gap:32px;align-items:flex-start">
+      <div>
+        <div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;margin-bottom:10px">04 · Hero-100%</div>
+        <div style="width:1440px;height:900px;border-radius:16px;overflow:hidden;position:relative;background:repeating-linear-gradient(135deg,#AEBACD 0 14px,#BBC7D8 14px 28px);box-shadow:0 2px 14px rgba(11,31,58,.07)">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:11px ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#7A8494">photo — avion au décollage · frame vidéo 100%</div>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,31,58,.5) 0%,rgba(11,31,58,.12) 40%,rgba(11,31,58,.7) 100%)"></div>
+          <div style="position:absolute;top:0;left:0;right:0;height:88px;display:flex;align-items:center;padding:0 96px;gap:56px;color:#fff">
+            <div style="font-size:17px;font-weight:600;white-space:nowrap">GVA <span style="color:#E4002B">—</span> Genève Aéroport</div>
+            <div style="flex:1;display:flex;gap:36px;justify-content:center;font-size:15px;font-weight:500"><span>Vols</span><span>Services</span><span>Accès &amp; Parking</span><span>Boutiques</span><span>Infos pratiques</span></div>
+            <div style="display:flex;gap:20px;align-items:center"><div style="font-size:14px;font-weight:500"><span style="font-weight:600">FR</span><span style="opacity:.5"> / EN</span></div><div style="height:44px;padding:0 22px;border-radius:12px;background:#fff;color:#0B1F3A;display:flex;align-items:center;font-size:15px;font-weight:500">Mon vol</div></div>
+          </div>
+          <div style="position:absolute;left:96px;bottom:190px;color:#fff;display:flex;flex-direction:column;gap:28px;align-items:flex-start">
+            <div style="font-size:88px;font-weight:600;letter-spacing:-.035em;line-height:1">Prêt pour l'embarquement</div>
+            <div style="display:flex;gap:14px"><div style="height:52px;padding:0 26px;border-radius:12px;background:#E4002B;color:#fff;display:flex;align-items:center;font-size:16px;font-weight:500">Suivre mon vol</div><div style="height:52px;padding:0 26px;border-radius:12px;border:1px solid rgba(255,255,255,.6);display:flex;align-items:center;font-size:16px;font-weight:500">Préparer mon voyage</div></div>
+          </div>
+          <div style="position:absolute;left:96px;right:96px;bottom:48px;height:3px;border-radius:2px;background:rgba(255,255,255,.28)"><div style="width:100%;height:100%;border-radius:2px;background:#fff"></div></div>
+        </div>
+      </div>
+      <div style="width:320px;border:1px dashed #E4002B;border-radius:12px;padding:16px 18px;background:#FFF4F6;font:12px/1.7 ui-monospace,Menlo,monospace;color:#0B1F3A">
+        <div style="font-weight:700;margin-bottom:8px">Annotation</div>
+        fin du scrub → unpin du sticky → les CTA entrent en fade + translateY 16px, 320ms ease-out
+      </div>
+    </div>
+
+    <sc-if value="{{ showMobile }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;gap:40px;align-items:flex-start">
+        <div>
+          <div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;margin-bottom:10px">01-M · Hero-00% — 390</div>
+          <div style="width:390px;height:844px;border-radius:16px;overflow:hidden;position:relative;background:repeating-linear-gradient(135deg,#C9D2DE 0 12px,#D6DDE7 12px 24px);box-shadow:0 2px 14px rgba(11,31,58,.07)">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7A8494;text-align:center;padding:0 40px">photo pistes · 00%</div>
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,31,58,.5) 0%,rgba(11,31,58,.1) 38%,rgba(11,31,58,.7) 100%)"></div>
+            <div style="position:absolute;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;color:#fff">
+              <div style="font-size:14px;font-weight:600">GVA <span style="color:#E4002B">—</span> Genève</div>
+              <div style="display:flex;gap:14px;align-items:center;font-size:13px;font-weight:600">FR<span style="font-size:20px;line-height:1">≡</span></div>
+            </div>
+            <div style="position:absolute;left:20px;right:20px;bottom:150px;color:#fff"><div style="font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#E4002B;margin-bottom:14px">Genève</div><div style="font-size:44px;font-weight:600;letter-spacing:-.03em;line-height:1.05">Bienvenue à Genève</div></div>
+            <div style="position:absolute;left:0;right:0;bottom:76px;text-align:center;color:#fff;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">Scrollez ↓</div>
+            <div style="position:absolute;left:20px;right:20px;bottom:40px;height:3px;border-radius:2px;background:rgba(255,255,255,.28)"><div style="width:2%;height:100%;border-radius:2px;background:#fff"></div></div>
+          </div>
+        </div>
+        <div>
+          <div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;margin-bottom:10px">04-M · Hero-100% — 390</div>
+          <div style="width:390px;height:844px;border-radius:16px;overflow:hidden;position:relative;background:repeating-linear-gradient(135deg,#AEBACD 0 12px,#BBC7D8 12px 24px);box-shadow:0 2px 14px rgba(11,31,58,.07)">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7A8494">photo décollage · 100%</div>
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,31,58,.5) 0%,rgba(11,31,58,.1) 38%,rgba(11,31,58,.72) 100%)"></div>
+            <div style="position:absolute;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;color:#fff"><div style="font-size:14px;font-weight:600">GVA <span style="color:#E4002B">—</span> Genève</div><div style="display:flex;gap:14px;align-items:center;font-size:13px;font-weight:600">FR<span style="font-size:20px;line-height:1">≡</span></div></div>
+            <div style="position:absolute;left:20px;right:20px;bottom:110px;color:#fff;display:flex;flex-direction:column;gap:20px"><div style="font-size:44px;font-weight:600;letter-spacing:-.03em;line-height:1.05">Prêt pour l'embarquement</div><div style="height:50px;border-radius:12px;background:#E4002B;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500">Suivre mon vol</div></div>
+            <div style="position:absolute;left:20px;right:20px;bottom:40px;height:3px;border-radius:2px;background:rgba(255,255,255,.28)"><div style="width:100%;height:100%;border-radius:2px;background:#fff"></div></div>
+          </div>
+        </div>
+        <div style="width:300px;border:1px dashed #E4002B;border-radius:12px;padding:16px 18px;background:#FFF4F6;font:12px/1.7 ui-monospace,Menlo,monospace;color:#0B1F3A">
+          <div style="font-weight:700;margin-bottom:8px">Mobile — hero</div>
+          scrub réduit à 1200px de scroll ; si prefers-reduced-motion : vidéo remplacée par image fixe + titre final
+        </div>
+      </div>
+    </sc-if>
+  </div>
+
+  <!-- 05 SPEC -->
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#5A6472">05 · Spec — Scroll vidéo</div>
+    <div style="width:1440px;background:#fff;border-radius:16px;box-shadow:0 2px 14px rgba(11,31,58,.07);padding:64px 72px;display:flex;gap:72px">
+      <div style="width:520px;display:flex;flex-direction:column;gap:24px">
+        <div style="font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.15">Scrub vidéo au scroll</div>
+        <div style="font-size:16px;line-height:1.7;color:#5A6472">Le conteneur du hero est <b style="color:#0B1F3A">sticky</b> pendant toute la durée du scrub. La position de scroll dans la zone pilote directement <code style="font-family:ui-monospace,Menlo,monospace">video.currentTime</code>. Aucune lecture automatique : la vidéo n'avance que si l'utilisateur scrolle.</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;gap:16px;font-size:15px"><span style="width:190px;color:#5A6472">Distance de scrub</span><span style="font-weight:600">≈ 2000 px</span></div>
+          <div style="display:flex;gap:16px;font-size:15px"><span style="width:190px;color:#5A6472">Position</span><span style="font-weight:600">sticky, top 0, hauteur 100vh</span></div>
+          <div style="display:flex;gap:16px;font-size:15px"><span style="width:190px;color:#5A6472">Hauteur du spacer</span><span style="font-weight:600">100vh + 2000 px</span></div>
+          <div style="display:flex;gap:16px;font-size:15px"><span style="width:190px;color:#5A6472">Easing</span><span style="font-weight:600">linéaire (aucun)</span></div>
+          <div style="display:flex;gap:16px;font-size:15px"><span style="width:190px;color:#5A6472">Mapping</span><span style="font-weight:600">t = clamp(scrollY / 2000, 0, 1) × durée</span></div>
+          <div style="display:flex;gap:16px;font-size:15px"><span style="width:190px;color:#5A6472">Bascule</span><span style="font-weight:600">scrollY = 2000 px → unpin</span></div>
+          <div style="display:flex;gap:16px;font-size:15px"><span style="width:190px;color:#5A6472">Média</span><span style="font-weight:600">MP4 H.264 keyframe-dense, ou séquence 120 WebP</span></div>
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:20px">
+        <div style="position:relative;height:340px;border-radius:14px;background:#F7F8FA;border:1px solid #DDE1E8;padding:28px 32px">
+          <div style="font:11px ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:#5A6472">Axe de scroll</div>
+          <div style="position:relative;margin-top:40px;height:8px;border-radius:4px;background:linear-gradient(90deg,#0B1F3A 0 72%,#DDE1E8 72% 100%)"></div>
+          <div style="display:flex;margin-top:14px">
+            <div style="width:18%;font:11px ui-monospace,Menlo,monospace;color:#0B1F3A">0px<br>hero pinné</div>
+            <div style="width:18%;font:11px ui-monospace,Menlo,monospace;color:#0B1F3A">660px<br>33%</div>
+            <div style="width:18%;font:11px ui-monospace,Menlo,monospace;color:#0B1F3A">1320px<br>66%</div>
+            <div style="width:18%;font:11px ui-monospace,Menlo,monospace;color:#E4002B;font-weight:700">2000px<br>bascule</div>
+            <div style="flex:1;font:11px ui-monospace,Menlo,monospace;color:#5A6472">&gt;2000px<br>scroll normal, section 2</div>
+          </div>
+          <div style="position:absolute;left:32px;bottom:28px;right:32px;display:flex;gap:12px">
+            <div style="flex:1;height:64px;border-radius:10px;border:1px dashed #9AA3B0;display:flex;align-items:center;justify-content:center;font:11px ui-monospace,Menlo,monospace;color:#5A6472">position: sticky</div>
+            <div style="width:200px;height:64px;border-radius:10px;border:1px dashed #E4002B;display:flex;align-items:center;justify-content:center;font:11px ui-monospace,Menlo,monospace;color:#E4002B">flux normal</div>
+          </div>
+        </div>
+        <div style="border-radius:14px;background:#0B1F3A;color:#fff;padding:24px 28px;font:12px/1.8 ui-monospace,Menlo,monospace">
+          onScroll (rAF throttle) → video.currentTime = progress × duration → 0 ms, linéaire<br>
+          palier atteint → titre cross-fade 240 ms ease-out<br>
+          progress = 1 → unpin sticky → sections suivantes en scroll natif
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 3D FERMÉ -->
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#5A6472">06 · Exploration 3D — état fermé</div>
+    <div style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap">
+      <div style="width:1440px;height:900px;border-radius:16px;overflow:hidden;position:relative;background:linear-gradient(160deg,#0B1F3A 0%,#12305A 55%,#0B1F3A 100%);box-shadow:0 2px 14px rgba(11,31,58,.07);display:flex;padding:80px 96px;gap:56px;color:#fff">
+        <div style="width:380px;display:flex;flex-direction:column;gap:24px">
+          <div style="font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#E4002B">L'aéroport en 3D</div>
+          <div style="font-size:52px;font-weight:600;letter-spacing:-.03em;line-height:1.05">Explorez l'aéroport</div>
+          <div style="font-size:17px;line-height:1.7;color:#A9BBD2">Du dépôt des bagages à la porte d'embarquement, parcourez le terminal en volume et repérez chaque étape de votre passage.</div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;font-size:15px;color:#D3DEEC">
+            <div style="display:flex;gap:14px"><span style="color:#7E97B8;width:18px">1</span>Enregistrement</div>
+            <div style="display:flex;gap:14px"><span style="color:#7E97B8;width:18px">2</span>Contrôle de sécurité</div>
+            <div style="display:flex;gap:14px"><span style="color:#7E97B8;width:18px">3</span>Duty Free</div>
+            <div style="display:flex;gap:14px"><span style="color:#7E97B8;width:18px">4</span>Salons VIP</div>
+            <div style="display:flex;gap:14px"><span style="color:#7E97B8;width:18px">5</span>Portes d'embarquement</div>
+            <div style="display:flex;gap:14px"><span style="color:#7E97B8;width:18px">6</span>Parkings &amp; accès</div>
+          </div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:28px">
+          <div style="flex:1;position:relative;border-radius:16px;background:repeating-linear-gradient(135deg,#12294A 0 14px,#16305A 14px 28px);border:1px solid rgba(255,255,255,.1)">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;font:11px/1.9 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7E97B8">rendu 3D isométrique low-poly<br>terminal principal · jetée · tour de contrôle · tarmac · parkings</div>
+            <div style="position:absolute;left:14%;top:58%;width:40px;height:40px;border-radius:50%;background:#fff;color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;animation:halo 2.6s ease-out infinite">1</div>
+            <div style="position:absolute;left:31%;top:40%;width:40px;height:40px;border-radius:50%;background:#fff;color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;animation:halo 2.6s ease-out .3s infinite">2</div>
+            <div style="position:absolute;left:47%;top:55%;display:flex;align-items:center;gap:12px"><div style="width:48px;height:48px;border-radius:50%;background:#fff;color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600;box-shadow:0 0 0 8px rgba(255,255,255,.16)">3</div><div style="background:#fff;color:#0B1F3A;border-radius:10px;padding:9px 13px;font-size:13px;font-weight:500;white-space:nowrap">Duty Free</div></div>
+            <div style="position:absolute;left:62%;top:30%;width:40px;height:40px;border-radius:50%;background:#fff;color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;animation:halo 2.6s ease-out .6s infinite">4</div>
+            <div style="position:absolute;left:76%;top:52%;width:40px;height:40px;border-radius:50%;background:#fff;color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;animation:halo 2.6s ease-out .9s infinite">5</div>
+            <div style="position:absolute;left:24%;top:80%;width:40px;height:40px;border-radius:50%;background:#fff;color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;animation:halo 2.6s ease-out 1.2s infinite">6</div>
+            <div style="position:absolute;right:20px;top:20px;font:10px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#7E97B8">état : défaut · pastille 3 en hover</div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;justify-content:center">
+            <div style="width:48px;height:48px;border-radius:12px;border:1px solid rgba(255,255,255,.24);display:flex;align-items:center;justify-content:center;font-size:17px">↺</div>
+            <div style="width:48px;height:48px;border-radius:12px;border:1px solid rgba(255,255,255,.24);display:flex;align-items:center;justify-content:center;font-size:17px">↻</div>
+            <div style="width:1px;height:32px;background:rgba(255,255,255,.2);margin:0 8px"></div>
+            <div style="width:48px;height:48px;border-radius:12px;border:1px solid rgba(255,255,255,.24);display:flex;align-items:center;justify-content:center;font-size:19px">−</div>
+            <div style="width:48px;height:48px;border-radius:12px;border:1px solid rgba(255,255,255,.24);display:flex;align-items:center;justify-content:center;font-size:19px">+</div>
+            <div style="width:1px;height:32px;background:rgba(255,255,255,.2);margin:0 8px"></div>
+            <div style="height:48px;padding:0 22px;border-radius:12px;background:#fff;color:#0B1F3A;display:flex;align-items:center;font-size:15px;font-weight:500">Réinitialiser la vue</div>
+          </div>
+        </div>
+      </div>
+      <div style="width:320px;border:1px dashed #E4002B;border-radius:12px;padding:16px 18px;background:#FFF4F6;font:12px/1.7 ui-monospace,Menlo,monospace;color:#0B1F3A">
+        <div style="font-weight:700;margin-bottom:8px">Annotation — 3D</div>
+        section visible &gt; 30% → caméra entre en orbite lente (fade-in 600ms ease-out)<br><br>
+        hover pastille → scale 1.0→1.2 + tooltip fade 160ms<br><br>
+        clic pastille → pastille en accent + ouverture aside 320ms cubic-bezier(.2,.8,.2,1)<br><br>
+        rotation/zoom : drag & boutons, damping 0.08
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 3D ASIDE -->
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#5A6472">07 · Exploration 3D — aside ouvert (point 3 actif)</div>
+    <div style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap">
+      <div style="width:1440px;height:900px;border-radius:16px;overflow:hidden;position:relative;background:linear-gradient(160deg,#0B1F3A 0%,#12305A 55%,#0B1F3A 100%);box-shadow:0 2px 14px rgba(11,31,58,.07);color:#fff">
+        <div style="position:absolute;inset:0;display:flex;padding:80px 96px;gap:56px;transform:translateX(-120px)">
+          <div style="width:380px;display:flex;flex-direction:column;gap:24px;opacity:.55">
+            <div style="font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#E4002B">L'aéroport en 3D</div>
+            <div style="font-size:52px;font-weight:600;letter-spacing:-.03em;line-height:1.05">Explorez l'aéroport</div>
+            <div style="font-size:17px;line-height:1.7;color:#A9BBD2">Du dépôt des bagages à la porte d'embarquement, parcourez le terminal en volume.</div>
+          </div>
+          <div style="flex:1;position:relative;border-radius:16px;background:repeating-linear-gradient(135deg,#12294A 0 14px,#16305A 14px 28px);border:1px solid rgba(255,255,255,.1)">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:11px/1.9 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7E97B8;text-align:center">rendu 3D — caméra recadrée sur le point 3</div>
+            <div style="position:absolute;left:14%;top:58%;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.55);color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">1</div>
+            <div style="position:absolute;left:31%;top:40%;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.55);color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">2</div>
+            <div style="position:absolute;left:47%;top:55%;width:40px;height:40px;border-radius:50%;background:#E4002B;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;box-shadow:0 0 0 10px rgba(228,0,43,.22)">3</div>
+            <div style="position:absolute;left:62%;top:30%;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.55);color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">4</div>
+            <div style="position:absolute;left:76%;top:52%;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.55);color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">5</div>
+            <div style="position:absolute;left:24%;top:80%;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.55);color:#0B1F3A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">6</div>
+          </div>
+        </div>
+        <div style="position:absolute;top:0;right:0;bottom:0;width:420px;background:#fff;color:#0B1F3A;box-shadow:-24px 0 60px rgba(4,12,26,.35);display:flex;flex-direction:column">
+          <div style="padding:28px 32px 0;display:flex;justify-content:space-between;align-items:flex-start">
+            <div>
+              <div style="display:flex;align-items:center;gap:12px"><div style="width:32px;height:32px;border-radius:50%;background:#E4002B;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600">3</div><div style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#5A6472">Zone publique</div></div>
+              <div style="font-size:30px;font-weight:600;letter-spacing:-.02em;margin-top:16px">Duty Free</div>
+            </div>
+            <div style="width:36px;height:36px;border-radius:50%;background:#F0F2F6;display:flex;align-items:center;justify-content:center;font-size:17px;color:#5A6472">×</div>
+          </div>
+          <div style="margin:24px 32px 0;height:220px;border-radius:14px;background:repeating-linear-gradient(135deg,#DDE1E8 0 12px,#E8EBF0 12px 24px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7A8494">photo — galerie duty free</div>
+          <div style="padding:24px 32px 0;font-size:15px;line-height:1.7;color:#5A6472">2 400 m² de boutiques après le contrôle de sécurité : horlogerie, parfums, chocolats suisses et spiritueux, aux prix hors taxes. Réservez en ligne et récupérez votre commande au comptoir avant l'embarquement.</div>
+          <div style="margin:28px 32px 0;display:flex;gap:12px">
+            <div style="flex:1;border-radius:12px;background:#F7F8FA;padding:14px"><div style="font:10px ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:#5A6472">Étage</div><div style="font-size:15px;font-weight:600;margin-top:6px">Niveau 2</div></div>
+            <div style="flex:1;border-radius:12px;background:#F7F8FA;padding:14px"><div style="font:10px ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:#5A6472">Horaires</div><div style="font-size:15px;font-weight:600;margin-top:6px">05:00–22:30</div></div>
+            <div style="flex:1;border-radius:12px;background:#F7F8FA;padding:14px"><div style="font:10px ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:#5A6472">Attente</div><div style="font-size:15px;font-weight:600;margin-top:6px">4 min</div></div>
+          </div>
+          <div style="margin-top:auto;padding:28px 32px 32px;display:flex;flex-direction:column;gap:14px">
+            <div style="height:50px;border-radius:12px;background:#0B1F3A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500">Voir sur le plan</div>
+            <div style="text-align:center;font-size:14px;font-weight:500;color:#E4002B;text-decoration:underline">Toutes les boutiques du terminal</div>
+          </div>
+        </div>
+      </div>
+      <div style="width:320px;border:1px dashed #E4002B;border-radius:12px;padding:16px 18px;background:#FFF4F6;font:12px/1.7 ui-monospace,Menlo,monospace;color:#0B1F3A">
+        <div style="font-weight:700;margin-bottom:8px">Annotation — aside</div>
+        clic pastille → aside slide-in depuis la droite (420px), 320ms cubic-bezier(.2,.8,.2,1)<br><br>
+        modèle 3D : translateX −120px, 320ms, même easing<br><br>
+        × ou Échap → slide-out 240ms, pastille revient à défaut<br><br>
+        changement de point sans fermer : contenu en cross-fade 180ms
+      </div>
+    </div>
+
+    <sc-if value="{{ showMobile }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;gap:40px;align-items:flex-start;margin-top:20px">
+        <div>
+          <div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;margin-bottom:10px">07-M · Bottom sheet 70% — 390</div>
+          <div style="width:390px;height:844px;border-radius:16px;overflow:hidden;position:relative;background:linear-gradient(160deg,#0B1F3A,#12305A);box-shadow:0 2px 14px rgba(11,31,58,.07);color:#fff">
+            <div style="padding:64px 20px 0"><div style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#E4002B">L'aéroport en 3D</div><div style="font-size:32px;font-weight:600;letter-spacing:-.02em;margin-top:12px">Explorez l'aéroport</div></div>
+            <div style="position:absolute;left:20px;right:20px;top:200px;height:180px;border-radius:14px;background:repeating-linear-gradient(135deg,#12294A 0 12px,#16305A 12px 24px);border:1px solid rgba(255,255,255,.1)">
+              <div style="position:absolute;left:40%;top:38%;width:40px;height:40px;border-radius:50%;background:#E4002B;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;box-shadow:0 0 0 8px rgba(228,0,43,.22)">3</div>
+            </div>
+            <div style="position:absolute;left:0;right:0;bottom:0;height:70%;background:#fff;color:#0B1F3A;border-radius:20px 20px 0 0;padding:14px 20px 24px;display:flex;flex-direction:column;box-shadow:0 -18px 48px rgba(4,12,26,.35)">
+              <div style="width:44px;height:4px;border-radius:2px;background:#DDE1E8;margin:0 auto 18px"></div>
+              <div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:10px"><div style="width:28px;height:28px;border-radius:50%;background:#E4002B;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600">3</div><div style="font-size:24px;font-weight:600">Duty Free</div></div><div style="width:32px;height:32px;border-radius:50%;background:#F0F2F6;display:flex;align-items:center;justify-content:center;color:#5A6472">×</div></div>
+              <div style="margin-top:16px;height:130px;border-radius:12px;background:repeating-linear-gradient(135deg,#DDE1E8 0 12px,#E8EBF0 12px 24px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:#7A8494">photo — duty free</div>
+              <div style="margin-top:16px;font-size:14px;line-height:1.65;color:#5A6472">2 400 m² de boutiques après le contrôle de sécurité : horlogerie, parfums, chocolats suisses et spiritueux.</div>
+              <div style="margin-top:16px;display:flex;gap:8px">
+                <div style="flex:1;border-radius:10px;background:#F7F8FA;padding:10px"><div style="font:9px ui-monospace,Menlo,monospace;text-transform:uppercase;color:#5A6472">Étage</div><div style="font-size:13px;font-weight:600">Niv. 2</div></div>
+                <div style="flex:1;border-radius:10px;background:#F7F8FA;padding:10px"><div style="font:9px ui-monospace,Menlo,monospace;text-transform:uppercase;color:#5A6472">Horaires</div><div style="font-size:13px;font-weight:600">05–22:30</div></div>
+                <div style="flex:1;border-radius:10px;background:#F7F8FA;padding:10px"><div style="font:9px ui-monospace,Menlo,monospace;text-transform:uppercase;color:#5A6472">Attente</div><div style="font-size:13px;font-weight:600">4 min</div></div>
+              </div>
+              <div style="margin-top:auto;height:50px;border-radius:12px;background:#0B1F3A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500">Voir sur le plan</div>
+            </div>
+          </div>
+        </div>
+        <div style="width:300px;border:1px dashed #E4002B;border-radius:12px;padding:16px 18px;background:#FFF4F6;font:12px/1.7 ui-monospace,Menlo,monospace;color:#0B1F3A">
+          <div style="font-weight:700;margin-bottom:8px">Mobile — aside</div>
+          tap pastille → bottom sheet monte à 70% de la hauteur, 280ms ease-out<br><br>
+          drag vers le bas &gt; 120px ou tap hors zone → fermeture 200ms
+        </div>
+      </div>
+    </sc-if>
+  </div>
+
+  <!-- 08 VOLS -->
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#5A6472">08 · Vos vols en temps réel</div>
+    <div style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap">
+      <div style="width:1440px;background:#F7F8FA;border-radius:16px;box-shadow:0 2px 14px rgba(11,31,58,.07);padding:88px 96px;display:flex;flex-direction:column;gap:40px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end">
+          <div><div style="font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#E4002B;margin-bottom:16px">Temps réel</div><div style="font-size:44px;font-weight:600;letter-spacing:-.025em">Vos vols en temps réel</div></div>
+          <div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472">mise à jour auto · 30 s</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:24px">
+          <div style="display:flex;gap:6px;background:#fff;border:1px solid #DDE1E8;border-radius:12px;padding:5px">
+            <div style="height:40px;padding:0 24px;border-radius:9px;background:#0B1F3A;color:#fff;display:flex;align-items:center;font-size:15px;font-weight:500">Départs</div>
+            <div style="height:40px;padding:0 24px;border-radius:9px;color:#5A6472;display:flex;align-items:center;font-size:15px;font-weight:500">Arrivées</div>
+          </div>
+          <div style="flex:1;max-width:420px;height:50px;border-radius:12px;border:1px solid #DDE1E8;background:#fff;display:flex;align-items:center;padding:0 18px;gap:12px;color:#9AA3B0;font-size:15px"><span>⌕</span>Vol, ville ou compagnie</div>
+        </div>
+        <div style="background:#fff;border:1px solid #DDE1E8;border-radius:14px;overflow:hidden">
+          <div style="display:grid;grid-template-columns:110px 1.4fr 140px 120px 130px 150px;padding:16px 24px;background:#F0F2F6;font:11px ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:#5A6472">
+            <div>Heure</div><div>Destination</div><div>Vol</div><div>Porte</div><div>Terminal</div><div>Statut</div>
+          </div>
+          <div style="display:grid;grid-template-columns:110px 1.4fr 140px 120px 130px 150px;padding:20px 24px;border-top:1px solid #EDEFF3;font-size:16px;align-items:center"><div style="font-weight:600">06:10</div><div>Londres Heathrow</div><div style="color:#5A6472">LX 348</div><div style="font-weight:600">B24</div><div style="color:#5A6472">Principal</div><div style="color:#1B7F4B;font-weight:600">Embarquement</div></div>
+          <div style="display:grid;grid-template-columns:110px 1.4fr 140px 120px 130px 150px;padding:20px 24px;border-top:1px solid #EDEFF3;font-size:16px;align-items:center"><div style="font-weight:600">06:35</div><div>Paris Charles-de-Gaulle</div><div style="color:#5A6472">AF 1243</div><div style="font-weight:600">A11</div><div style="color:#5A6472">Principal</div><div style="color:#5A6472">À l'heure</div></div>
+          <div style="display:grid;grid-template-columns:110px 1.4fr 140px 120px 130px 150px;padding:20px 24px;border-top:1px solid #EDEFF3;font-size:16px;align-items:center"><div style="font-weight:600">07:05</div><div>Barcelone El Prat</div><div style="color:#5A6472">VY 6621</div><div style="font-weight:600">C08</div><div style="color:#5A6472">Principal</div><div style="color:#E4002B;font-weight:600">Retard 25 min</div></div>
+          <div style="display:grid;grid-template-columns:110px 1.4fr 140px 120px 130px 150px;padding:20px 24px;border-top:1px solid #EDEFF3;font-size:16px;align-items:center"><div style="font-weight:600">07:20</div><div>Amsterdam Schiphol</div><div style="color:#5A6472">KL 1928</div><div style="font-weight:600">B12</div><div style="color:#5A6472">Principal</div><div style="color:#5A6472">À l'heure</div></div>
+          <div style="display:grid;grid-template-columns:110px 1.4fr 140px 120px 130px 150px;padding:20px 24px;border-top:1px solid #EDEFF3;font-size:16px;align-items:center"><div style="font-weight:600">07:45</div><div>Lisbonne Humberto Delgado</div><div style="color:#5A6472">TP 933</div><div style="font-weight:600">D02</div><div style="color:#5A6472">Jetée</div><div style="color:#5A6472">À l'heure</div></div>
+          <div style="display:grid;grid-template-columns:110px 1.4fr 140px 120px 130px 150px;padding:20px 24px;border-top:1px solid #EDEFF3;font-size:16px;align-items:center"><div style="font-weight:600">08:15</div><div>Zurich</div><div style="color:#5A6472">LX 2803</div><div style="font-weight:600">A03</div><div style="color:#5A6472">Principal</div><div style="color:#5A6472">À l'heure</div></div>
+        </div>
+        <div style="display:flex;justify-content:center"><div style="height:48px;padding:0 26px;border-radius:12px;border:1px solid #0B1F3A;display:flex;align-items:center;font-size:15px;font-weight:500">Tous les départs</div></div>
+      </div>
+      <sc-if value="{{ showMobile }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;margin-bottom:10px">08-M · 390</div>
+          <div style="width:390px;background:#F7F8FA;border-radius:16px;box-shadow:0 2px 14px rgba(11,31,58,.07);padding:40px 20px;display:flex;flex-direction:column;gap:20px">
+            <div style="font-size:28px;font-weight:600;letter-spacing:-.02em">Vos vols en temps réel</div>
+            <div style="display:flex;gap:6px;background:#fff;border:1px solid #DDE1E8;border-radius:12px;padding:4px"><div style="flex:1;height:38px;border-radius:9px;background:#0B1F3A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500">Départs</div><div style="flex:1;height:38px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:#5A6472">Arrivées</div></div>
+            <div style="height:46px;border-radius:12px;border:1px solid #DDE1E8;background:#fff;display:flex;align-items:center;padding:0 14px;gap:10px;color:#9AA3B0;font-size:14px"><span>⌕</span>Vol, ville ou compagnie</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="background:#fff;border:1px solid #DDE1E8;border-radius:12px;padding:14px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:15px;font-weight:600">06:10 · Londres LHR</div><div style="font-size:13px;color:#5A6472;margin-top:4px">LX 348 · Porte B24</div></div><div style="font-size:12px;font-weight:600;color:#1B7F4B;text-align:right">Embar-<br>quement</div></div>
+              <div style="background:#fff;border:1px solid #DDE1E8;border-radius:12px;padding:14px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:15px;font-weight:600">06:35 · Paris CDG</div><div style="font-size:13px;color:#5A6472;margin-top:4px">AF 1243 · Porte A11</div></div><div style="font-size:12px;font-weight:600;color:#5A6472">À l'heure</div></div>
+              <div style="background:#fff;border:1px solid #DDE1E8;border-radius:12px;padding:14px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:15px;font-weight:600">07:05 · Barcelone BCN</div><div style="font-size:13px;color:#5A6472;margin-top:4px">VY 6621 · Porte C08</div></div><div style="font-size:12px;font-weight:600;color:#E4002B">Retard 25′</div></div>
+              <div style="background:#fff;border:1px solid #DDE1E8;border-radius:12px;padding:14px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:15px;font-weight:600">07:20 · Amsterdam AMS</div><div style="font-size:13px;color:#5A6472;margin-top:4px">KL 1928 · Porte B12</div></div><div style="font-size:12px;font-weight:600;color:#5A6472">À l'heure</div></div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <div style="width:300px;border:1px dashed #E4002B;border-radius:12px;padding:16px 18px;background:#FFF4F6;font:12px/1.7 ui-monospace,Menlo,monospace;color:#0B1F3A">
+        <div style="font-weight:700;margin-bottom:8px">Annotation — vols</div>
+        onglet → cross-fade du tableau 180ms + indicateur qui glisse 200ms ease-out<br><br>
+        saisie → filtrage debounce 250ms<br><br>
+        polling 30s → ligne modifiée : flash fond accent 8% pendant 600ms<br><br>
+        mobile : tableau → cartes empilées
+      </div>
+    </div>
+  </div>
+
+  <!-- 09 ACCÈS -->
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#5A6472">09 · Accès &amp; Parking</div>
+    <div style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap">
+      <div style="width:1440px;background:#fff;border-radius:16px;box-shadow:0 2px 14px rgba(11,31,58,.07);padding:88px 96px;display:flex;flex-direction:column;gap:44px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end">
+          <div><div style="font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#E4002B;margin-bottom:16px">Venir à l'aéroport</div><div style="font-size:44px;font-weight:600;letter-spacing:-.025em">Accès &amp; Parking</div></div>
+          <div style="font-size:16px;color:#5A6472;max-width:420px;text-align:right">6 minutes depuis la gare Cornavin, sortie directe sur l'autoroute A1.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+          <div style="border:1px solid #DDE1E8;border-radius:14px;overflow:hidden">
+            <div style="height:180px;background:repeating-linear-gradient(135deg,#DDE1E8 0 12px,#E8EBF0 12px 24px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7A8494">photo — quai CFF</div>
+            <div style="padding:26px 28px 30px"><div style="font-size:22px;font-weight:600">En train</div><div style="font-size:15px;line-height:1.7;color:#5A6472;margin-top:12px">Gare CFF sous le terminal. 6 min jusqu'à Cornavin, 4 trains par heure. Billet gratuit 80 min à retirer à l'arrivée bagages.</div><div style="margin-top:20px;font-size:14px;font-weight:600;color:#E4002B;text-decoration:underline">Horaires CFF</div></div>
+          </div>
+          <div style="border:1px solid #DDE1E8;border-radius:14px;overflow:hidden">
+            <div style="height:180px;background:repeating-linear-gradient(135deg,#DDE1E8 0 12px,#E8EBF0 12px 24px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7A8494">photo — dépose-minute</div>
+            <div style="padding:26px 28px 30px"><div style="font-size:22px;font-weight:600">En voiture</div><div style="font-size:15px;line-height:1.7;color:#5A6472;margin-top:12px">Sortie 1 de l'A1, dépose-minute devant les départs (10 min offertes). Bornes de recharge aux niveaux P1 et P26.</div><div style="margin-top:20px;font-size:14px;font-weight:600;color:#E4002B;text-decoration:underline">Itinéraire</div></div>
+          </div>
+          <div style="border:1px solid #DDE1E8;border-radius:14px;overflow:hidden">
+            <div style="height:180px;background:repeating-linear-gradient(135deg,#DDE1E8 0 12px,#E8EBF0 12px 24px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:#7A8494">photo — arrêt de bus</div>
+            <div style="padding:26px 28px 30px"><div style="font-size:22px;font-weight:600">En bus</div><div style="font-size:15px;line-height:1.7;color:#5A6472;margin-top:12px">Lignes 5, 10, 23, 28 et Noctambus. Arrêt à 2 minutes à pied du hall d'arrivée, côté France également desservi.</div><div style="margin-top:20px;font-size:14px;font-weight:600;color:#E4002B;text-decoration:underline">Réseau TPG</div></div>
+          </div>
+        </div>
+        <div style="background:#F7F8FA;border-radius:14px;padding:36px 40px;display:flex;gap:56px;align-items:center">
+          <div style="width:260px"><div style="font-size:22px;font-weight:600">Tarifs parking</div><div style="font-size:14px;color:#5A6472;margin-top:8px">Réservation en ligne : −20 %</div></div>
+          <div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:24px">
+            <div><div style="font:11px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em;color:#5A6472">P1 · Court terme</div><div style="font-size:26px;font-weight:600;margin-top:8px">CHF 5.—<span style="font-size:14px;font-weight:400;color:#5A6472"> /h</span></div></div>
+            <div><div style="font:11px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em;color:#5A6472">P26 · Longue durée</div><div style="font-size:26px;font-weight:600;margin-top:8px">CHF 24.—<span style="font-size:14px;font-weight:400;color:#5A6472"> /jour</span></div></div>
+            <div><div style="font:11px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em;color:#5A6472">P51 · Économique</div><div style="font-size:26px;font-weight:600;margin-top:8px">CHF 16.—<span style="font-size:14px;font-weight:400;color:#5A6472"> /jour</span></div></div>
+            <div><div style="font:11px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em;color:#5A6472">Dépose-minute</div><div style="font-size:26px;font-weight:600;margin-top:8px">10 min<span style="font-size:14px;font-weight:400;color:#5A6472"> offertes</span></div></div>
+          </div>
+          <div style="height:50px;padding:0 26px;border-radius:12px;background:#0B1F3A;color:#fff;display:flex;align-items:center;font-size:16px;font-weight:500;white-space:nowrap">Réserver</div>
+        </div>
+      </div>
+      <sc-if value="{{ showMobile }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;margin-bottom:10px">09-M · 390</div>
+          <div style="width:390px;background:#fff;border-radius:16px;box-shadow:0 2px 14px rgba(11,31,58,.07);padding:40px 20px;display:flex;flex-direction:column;gap:16px">
+            <div style="font-size:28px;font-weight:600;letter-spacing:-.02em">Accès &amp; Parking</div>
+            <div style="border:1px solid #DDE1E8;border-radius:12px;overflow:hidden"><div style="height:120px;background:repeating-linear-gradient(135deg,#DDE1E8 0 12px,#E8EBF0 12px 24px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;text-transform:uppercase;color:#7A8494">photo — train</div><div style="padding:16px"><div style="font-size:18px;font-weight:600">En train</div><div style="font-size:14px;line-height:1.6;color:#5A6472;margin-top:6px">6 min jusqu'à Cornavin, 4 trains/h.</div></div></div>
+            <div style="border:1px solid #DDE1E8;border-radius:12px;overflow:hidden"><div style="height:120px;background:repeating-linear-gradient(135deg,#DDE1E8 0 12px,#E8EBF0 12px 24px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;text-transform:uppercase;color:#7A8494">photo — voiture</div><div style="padding:16px"><div style="font-size:18px;font-weight:600">En voiture</div><div style="font-size:14px;line-height:1.6;color:#5A6472;margin-top:6px">Sortie 1 de l'A1, dépose-minute départs.</div></div></div>
+            <div style="border:1px solid #DDE1E8;border-radius:12px;overflow:hidden"><div style="height:120px;background:repeating-linear-gradient(135deg,#DDE1E8 0 12px,#E8EBF0 12px 24px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;text-transform:uppercase;color:#7A8494">photo — bus</div><div style="padding:16px"><div style="font-size:18px;font-weight:600">En bus</div><div style="font-size:14px;line-height:1.6;color:#5A6472;margin-top:6px">Lignes 5, 10, 23, 28 et Noctambus.</div></div></div>
+            <div style="background:#F7F8FA;border-radius:12px;padding:18px"><div style="font-size:18px;font-weight:600">Tarifs parking</div><div style="display:flex;justify-content:space-between;margin-top:12px;font-size:14px"><span style="color:#5A6472">P1 court terme</span><span style="font-weight:600">CHF 5.—/h</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:14px"><span style="color:#5A6472">P26 longue durée</span><span style="font-weight:600">CHF 24.—/j</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:14px"><span style="color:#5A6472">P51 économique</span><span style="font-weight:600">CHF 16.—/j</span></div><div style="margin-top:16px;height:46px;border-radius:12px;background:#0B1F3A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500">Réserver</div></div>
+          </div>
+        </div>
+      </sc-if>
+      <div style="width:300px;border:1px dashed #E4002B;border-radius:12px;padding:16px 18px;background:#FFF4F6;font:12px/1.7 ui-monospace,Menlo,monospace;color:#0B1F3A">
+        <div style="font-weight:700;margin-bottom:8px">Annotation — accès</div>
+        entrée en vue → cartes en stagger 80ms, fade + translateY 20px, 400ms ease-out<br><br>
+        hover carte → shadow 0 8px 24px rgba(11,31,58,.10), 160ms
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 BOUTIQUES -->
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#5A6472">10 · Boutiques &amp; restaurants</div>
+    <div style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap">
+      <div style="width:1440px;background:#F7F8FA;border-radius:16px;box-shadow:0 2px 14px rgba(11,31,58,.07);padding:88px 96px;display:flex;flex-direction:column;gap:40px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end">
+          <div><div style="font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#E4002B;margin-bottom:16px">Avant de partir</div><div style="font-size:44px;font-weight:600;letter-spacing:-.025em">Boutiques &amp; restaurants</div></div>
+          <div style="display:flex;gap:12px"><div style="width:48px;height:48px;border-radius:50%;border:1px solid #DDE1E8;background:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;color:#9AA3B0">←</div><div style="width:48px;height:48px;border-radius:50%;background:#0B1F3A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px">→</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px">
+          <div style="background:#fff;border:1px solid #DDE1E8;border-radius:14px;overflow:hidden"><div style="height:210px;background:repeating-linear-gradient(135deg,#DDE1E8 0 12px,#E8EBF0 12px 24px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em;color:#7A8494">photo — horlogerie</div><div style="padding:22px 24px 26px"><div style="font:10px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em;color:#5A6472">Niveau 2 · Airside</div><div style="font-size:20px;font-weight:600;margin-top:8px">Horlogerie suisse</div><div style="font-size:14px;color:#5A6472;margin-top:6px">05:30 – 22:00</div></div></div>
+          <div style="background:#fff;border:1px solid #DDE1E8;border-radius:14px;overflow:hidden"><div style="height:210px;background:repeating-linear-gradient(135deg,#DDE1E8 0 12px,#E8EBF0 12px 24px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em;color:#7A8494">photo — café</div><div style="padding:22px 24px 26px"><div style="font:10px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em;color:#5A6472">Niveau 1 · Public</div><div style="font-size:20px;font-weight:600;margin-top:8px">Café du Léman</div><div style="font-size:14px;color:#5A6472;margin-top:6px">04:45 – 23:00</div></div></div>
+          <div style="background:#fff;border:1px solid #DDE1E8;border-radius:14px;overflow:hidden"><div style="height:210px;background:repeating-linear-gradient(135deg,#DDE1E8 0 12px,#E8EBF0 12px 24px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em;color:#7A8494">photo — chocolat</div><div style="padding:22px 24px 26px"><div style="font:10px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em;color:#5A6472">Niveau 2 · Airside</div><div style="font-size:20px;font-weight:600;margin-top:8px">Chocolats &amp; épicerie</div><div style="font-size:14px;color:#5A6472;margin-top:6px">05:00 – 22:30</div></div></div>
+          <div style="background:#fff;border:1px solid #DDE1E8;border-radius:14px;overflow:hidden"><div style="height:210px;background:repeating-linear-gradient(135deg,#DDE1E8 0 12px,#E8EBF0 12px 24px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em;color:#7A8494">photo — brasserie</div><div style="padding:22px 24px 26px"><div style="font:10px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em;color:#5A6472">Jetée · Airside</div><div style="font-size:20px;font-weight:600;margin-top:8px">Brasserie 1919</div><div style="font-size:14px;color:#5A6472;margin-top:6px">06:00 – 21:30</div></div></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center"><div style="width:36px;height:3px;border-radius:2px;background:#0B1F3A"></div><div style="width:36px;height:3px;border-radius:2px;background:#DDE1E8"></div><div style="width:36px;height:3px;border-radius:2px;background:#DDE1E8"></div></div>
+      </div>
+      <sc-if value="{{ showMobile }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;margin-bottom:10px">10-M · 390</div>
+          <div style="width:390px;background:#F7F8FA;border-radius:16px;box-shadow:0 2px 14px rgba(11,31,58,.07);padding:40px 20px;display:flex;flex-direction:column;gap:18px;overflow:hidden">
+            <div style="font-size:28px;font-weight:600;letter-spacing:-.02em">Boutiques &amp; restaurants</div>
+            <div style="display:flex;gap:14px"><div style="min-width:250px;background:#fff;border:1px solid #DDE1E8;border-radius:12px;overflow:hidden"><div style="height:150px;background:repeating-linear-gradient(135deg,#DDE1E8 0 12px,#E8EBF0 12px 24px);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;text-transform:uppercase;color:#7A8494">photo — horlogerie</div><div style="padding:16px"><div style="font-size:18px;font-weight:600">Horlogerie suisse</div><div style="font-size:13px;color:#5A6472;margin-top:4px">Niveau 2 · 05:30–22:00</div></div></div><div style="min-width:250px;background:#fff;border:1px solid #DDE1E8;border-radius:12px;overflow:hidden"><div style="height:150px;background:repeating-linear-gradient(135deg,#DDE1E8 0 12px,#E8EBF0 12px 24px)"></div></div></div>
+            <div style="display:flex;gap:6px"><div style="width:28px;height:3px;border-radius:2px;background:#0B1F3A"></div><div style="width:28px;height:3px;border-radius:2px;background:#DDE1E8"></div><div style="width:28px;height:3px;border-radius:2px;background:#DDE1E8"></div><div style="width:28px;height:3px;border-radius:2px;background:#DDE1E8"></div></div>
+          </div>
+        </div>
+      </sc-if>
+      <div style="width:300px;border:1px dashed #E4002B;border-radius:12px;padding:16px 18px;background:#FFF4F6;font:12px/1.7 ui-monospace,Menlo,monospace;color:#0B1F3A">
+        <div style="font-weight:700;margin-bottom:8px">Annotation — carrousel</div>
+        flèche / swipe → translateX d'un pas de carte, 380ms cubic-bezier(.4,0,.2,1)<br><br>
+        mobile : scroll-snap horizontal, 1,2 carte visible
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 FOOTER -->
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#5A6472">11 · Footer</div>
+    <div style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap">
+      <div style="width:1440px;background:#0B1F3A;color:#fff;border-radius:16px;padding:80px 96px 40px;display:flex;flex-direction:column;gap:56px">
+        <div style="display:flex;gap:56px">
+          <div style="width:340px;display:flex;flex-direction:column;gap:20px">
+            <div style="font-size:19px;font-weight:600">GVA <span style="color:#E4002B">—</span> Genève Aéroport</div>
+            <div style="font-size:15px;line-height:1.7;color:#A9BBD2">Restez informé des travaux, nouveautés et destinations saisonnières.</div>
+            <div style="display:flex;gap:10px"><div style="flex:1;height:50px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;padding:0 16px;font-size:15px;color:#8FA6C4">votre@email.ch</div><div style="height:50px;padding:0 22px;border-radius:12px;background:#E4002B;display:flex;align-items:center;font-size:15px;font-weight:500">S'inscrire</div></div>
+            <div style="display:flex;gap:10px;margin-top:8px">
+              <div style="width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">IN</div>
+              <div style="width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">FB</div>
+              <div style="width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">X</div>
+              <div style="width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">YT</div>
+            </div>
+          </div>
+          <div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;font-size:15px;color:#A9BBD2">
+            <div style="display:flex;flex-direction:column;gap:14px"><div style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff">Voyager</div><div>Départs</div><div>Arrivées</div><div>Bagages</div><div>Sûreté &amp; douane</div><div>Assistance PMR</div></div>
+            <div style="display:flex;flex-direction:column;gap:14px"><div style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff">À l'aéroport</div><div>Plan du terminal</div><div>Boutiques</div><div>Restaurants</div><div>Salons VIP</div><div>Objets trouvés</div></div>
+            <div style="display:flex;flex-direction:column;gap:14px"><div style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff">Accès</div><div>Train &amp; bus</div><div>Parkings</div><div>Location de voitures</div><div>Taxis</div><div>Recharge électrique</div></div>
+            <div style="display:flex;flex-direction:column;gap:14px"><div style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff">L'entreprise</div><div>Qui sommes-nous</div><div>Emplois</div><div>Environnement</div><div>Presse</div><div>Contact</div></div>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,.14);padding-top:28px;display:flex;justify-content:space-between;font-size:13px;color:#8FA6C4">
+          <div>© 2026 Genève Aéroport</div>
+          <div style="display:flex;gap:28px"><span>Mentions légales</span><span>Protection des données</span><span>Cookies</span><span>Accessibilité</span></div>
+        </div>
+      </div>
+      <sc-if value="{{ showMobile }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="font:12px ui-monospace,Menlo,monospace;color:#5A6472;margin-bottom:10px">11-M · 390</div>
+          <div style="width:390px;background:#0B1F3A;color:#fff;border-radius:16px;padding:36px 20px 24px;display:flex;flex-direction:column;gap:24px">
+            <div style="font-size:17px;font-weight:600">GVA <span style="color:#E4002B">—</span> Genève Aéroport</div>
+            <div style="display:flex;flex-direction:column;gap:10px"><div style="height:48px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;padding:0 14px;font-size:14px;color:#8FA6C4">votre@email.ch</div><div style="height:48px;border-radius:12px;background:#E4002B;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500">S'inscrire</div></div>
+            <div style="display:flex;flex-direction:column;gap:0;font-size:15px">
+              <div style="display:flex;justify-content:space-between;padding:16px 0;border-top:1px solid rgba(255,255,255,.14)">Voyager<span style="color:#8FA6C4">+</span></div>
+              <div style="display:flex;justify-content:space-between;padding:16px 0;border-top:1px solid rgba(255,255,255,.14)">À l'aéroport<span style="color:#8FA6C4">+</span></div>
+              <div style="display:flex;justify-content:space-between;padding:16px 0;border-top:1px solid rgba(255,255,255,.14)">Accès<span style="color:#8FA6C4">+</span></div>
+              <div style="display:flex;justify-content:space-between;padding:16px 0;border-top:1px solid rgba(255,255,255,.14)">L'entreprise<span style="color:#8FA6C4">+</span></div>
+            </div>
+            <div style="display:flex;gap:10px"><div style="width:38px;height:38px;border-radius:12px;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600">IN</div><div style="width:38px;height:38px;border-radius:12px;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600">FB</div><div style="width:38px;height:38px;border-radius:12px;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600">X</div><div style="width:38px;height:38px;border-radius:12px;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600">YT</div></div>
+            <div style="font-size:12px;color:#8FA6C4">© 2026 Genève Aéroport · Mentions légales</div>
+          </div>
+        </div>
+      </sc-if>
+      <div style="width:300px;border:1px dashed #E4002B;border-radius:12px;padding:16px 18px;background:#FFF4F6;font:12px/1.7 ui-monospace,Menlo,monospace;color:#0B1F3A">
+        <div style="font-weight:700;margin-bottom:8px">Annotation — footer</div>
+        soumission newsletter → champ remplacé par confirmation, fade 200ms<br><br>
+        mobile : colonnes en accordéons, ouverture 240ms ease-out
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showMobile&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Livrables&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      showMobile: this.props.showMobile ?? true,
+      showAnnotations: this.props.showAnnotations ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>
