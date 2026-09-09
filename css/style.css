@@ -458,9 +458,14 @@ a { color: inherit; text-decoration: none; }
    --------------------------------------------------------- */
 
 @media (max-width: 767px) {
-  :root { --hauteur-entete: 64px; }
+  :root {
+    --marge: 20px;
+    --hauteur-entete: 64px;
+    --titre-hero: 2.75rem;   /* 44 px sur la maquette 390 */
+  }
 
   .entete__inner { gap: 12px; }
+  .marque { font-size: 14px; }
   .marque__long { display: none; }
   .marque__court { display: inline; }
 
@@ -488,18 +493,40 @@ a { color: inherit; text-decoration: none; }
     font-size: 17px;
   }
 
-  .entete__actions { margin-left: auto; gap: 12px; }
+  .entete__actions { margin-left: auto; gap: 14px; }
+  .langues { font-size: 13px; font-weight: 600; }
   .bouton--clair { display: none; }
   .burger { display: flex; }
 
-  .hero__contenu { bottom: 140px; }
-  .hero__surtitre { margin-bottom: 14px; font-size: 12px; }
-  .hero__sous-titre { font-size: 16px; }
-  .hero__actions { margin-top: 22px; }
-  .bouton--accent, .bouton--contour { height: 48px; font-size: 15px; }
+  /* Voile légèrement différent sur la maquette mobile */
+  .hero__voile {
+    background: linear-gradient(180deg,
+                rgba(11, 31, 58, .5) 0%,
+                rgba(11, 31, 58, .1) 38%,
+                rgba(11, 31, 58, .7) 100%);
+  }
 
-  .hero__indice { bottom: 72px; font-size: 11px; gap: 8px; }
-  .hero__progression { bottom: 32px; }
+  .hero__contenu { bottom: 150px; max-width: none; }
+  .hero__surtitre { margin-bottom: 14px; font-size: 12px; }
+  .hero__titre { letter-spacing: -.03em; line-height: 1.05; }
+  .hero__sous-titre { margin-top: 14px; font-size: 16px; }
+
+  /* La maquette mobile ne garde qu'un seul appel à l'action,
+     sur toute la largeur. */
+  .hero__actions { margin-top: 20px; display: block; }
+  .bouton--accent { display: flex; width: 100%; height: 50px; font-size: 16px; }
+  .bouton--contour { display: none; }
+
+  .hero__indice {
+    bottom: 76px;
+    flex-direction: row;
+    gap: 8px;
+    font-size: 11px;
+  }
+  .hero__indice-suite { display: none; }
+  .hero__fleche { font-size: 13px; }
+
+  .hero__progression { bottom: 40px; }
 }
 
 
