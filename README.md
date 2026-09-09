@@ -134,6 +134,7 @@ normale avec une image fixe :
 
 ## À faire
 
+- [ ] Trancher la question du filigrane « Google Earth » (voir Crédits).
 - [ ] Auto-héberger la police Inter (aujourd'hui chargée depuis Google Fonts,
       alors que le cahier des charges demande un fonctionnement hors ligne).
 - [ ] Remplacer la section 2 provisoire par l'exploration du terminal.
@@ -141,10 +142,26 @@ normale avec une image fixe :
 - [ ] Tester sur iPhone et sur Android réels.
 - [ ] Écrire `CREDITS.md` avec les licences des images.
 
-## Crédits
+## Crédits et licences
 
-Imagerie du hero : Vexcel Imaging US Inc., Airbus, Landsat / Copernicus,
-©swisstopo, Data SIO, NOAA, U.S. Navy, NGA, GEBCO.
+Les rushes du hero sont un export **Google Earth Studio**. Les fournisseurs de
+données sont listés dans `../gva_hero/gva_hero/ImagerySources.txt` : Vexcel
+Imaging US Inc., Airbus, Landsat / Copernicus, ©swisstopo, Data SIO, NOAA,
+U.S. Navy, NGA, GEBCO.
+
+**Point à trancher** : un filigrane « Google Earth » est incrusté dans les
+images, vers le centre droit du cadre. Il est bien visible pendant tout le
+scrub. Ce filigrane **est** l'attribution exigée par Google : le retirer ou le
+recadrer hors champ contreviendrait aux conditions d'utilisation de Google Earth
+Studio, qui limitent par ailleurs cet usage au non commercial et à l'éditorial.
+
+Trois options, à décider avec l'enseignant :
+
+1. Le garder tel quel et citer Google Earth Studio dans les crédits — conforme,
+   mais le filigrane reste visible dans le hero.
+2. Recomposer le mouvement avec des images sous une autre licence
+   (photographies libres, ou rendu 3D maison).
+3. Demander à Genève Aéroport des visuels utilisables.
 
 ---
 

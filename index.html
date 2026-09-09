@@ -15,7 +15,7 @@
        en respectant le même point de bascule que le <picture> plus bas. -->
   <link rel="preload" as="image" href="images/hero/poster.avif" type="image/avif"
         media="(min-width: 768px)" fetchpriority="high">
-  <link rel="preload" as="image" href="images/hero/poster-800.avif" type="image/avif"
+  <link rel="preload" as="image" href="images/hero/poster-1080.avif" type="image/avif"
         media="(max-width: 767px)" fetchpriority="high">
 
   <link rel="stylesheet" href="css/style.css">
@@ -70,12 +70,12 @@
         <!-- Affiche : visible tout de suite, sert de repli si le canvas
              ne peut pas démarrer (AVIF non géré, JavaScript absent). -->
         <picture>
-          <source media="(max-width: 767px)" srcset="images/hero/poster-800.avif" type="image/avif">
-          <source media="(max-width: 767px)" srcset="images/hero/poster-800.webp" type="image/webp">
+          <source media="(max-width: 767px)" srcset="images/hero/poster-1080.avif" type="image/avif">
+          <source media="(max-width: 767px)" srcset="images/hero/poster-1080.webp" type="image/webp">
           <source srcset="images/hero/poster.avif" type="image/avif">
           <img class="hero__affiche" src="images/hero/poster.webp"
                alt="Vue aérienne des pistes de Genève Aéroport au lever du jour"
-               width="1600" height="900" fetchpriority="high" decoding="async">
+               width="1920" height="1080" fetchpriority="high" decoding="async">
         </picture>
         <canvas class="hero__canvas" aria-hidden="true"></canvas>
         <div class="hero__voile" aria-hidden="true"></div>

@@ -65,15 +65,16 @@ const mouvementsReduits =
 /* ---------------------------------------------------------
    3. Les frames
 
-   Deux jeux d'images sont disponibles : 1440 px de large pour
-   l'ordinateur, 800 px pour le téléphone. Le jeu est choisi une
-   fois pour toutes au chargement — en changer après coup
-   obligerait à retélécharger toute la séquence.
+   Deux jeux d'images sont disponibles : 1920 px de large pour
+   l'ordinateur — la résolution native des rushes — et 1080 px
+   pour le téléphone. Le jeu est choisi une fois pour toutes au
+   chargement ; en changer après coup obligerait à retélécharger
+   toute la séquence.
    --------------------------------------------------------- */
 
 const dossier = window.innerWidth < SEUIL_MOBILE
-  ? 'images/hero/800'
-  : 'images/hero/1440';
+  ? 'images/hero/1080'
+  : 'images/hero/1920';
 
 const images = new Array(NB_FRAMES);
 
