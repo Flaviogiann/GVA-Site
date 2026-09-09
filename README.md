@@ -43,8 +43,8 @@ GVA_SITE/
 │   ├── main.js            le scrub, le chargement des frames, le menu
 │   └── vendor/            GSAP 3.13 et ScrollTrigger, en local
 ├── images/hero/
-│   ├── 1440/000…119.avif  la séquence, version ordinateur
-│   ├── 800/000…119.avif   la séquence, version téléphone
+│   ├── 1920/000…119.avif  la séquence, version ordinateur
+│   ├── 1080/000…119.avif  la séquence, version téléphone
 │   └── poster*.avif|webp  l'affiche fixe, en deux tailles
 └── outils/encode-frames.sh
 ```
@@ -101,12 +101,31 @@ ait dessiné sa première image.
 Deux jeux de frames sont produits, choisis au chargement selon la largeur de
 l'écran. Un seul des deux est téléchargé.
 
-| Jeu | Frames | Poids |
-| --- | ---: | ---: |
-| 1440 px (ordinateur) | 120 | à mesurer |
-| 800 px (téléphone) | 120 | à mesurer |
+| Jeu | Frames | Par frame | Total |
+| --- | ---: | ---: | ---: |
+| 1920 px (ordinateur) | 120 | 127 Ko | 15,0 Mo |
+| 1080 px (téléphone) | 120 | 27 Ko | 3,2 Mo |
+| affiche 1920 (AVIF / WebP) | 1 | — | 273 / 356 Ko |
+| affiche 1080 (AVIF / WebP) | 1 | — | 75 / 106 Ko |
 
-Le cahier des charges plafonne le média du hero à 6 Mo.
+**Le jeu ordinateur dépasse le plafond de 6 Mo fixé par le cahier des charges.**
+Un premier encodage en 1440 px tenait dans 5,2 Mo, mais l'image était visiblement
+dégradée : bâtiments et arbres partaient en bouillie dès que le hero occupait
+tout l'écran. Le passage à 1920 px — la résolution native des rushes — corrige le
+problème et multiplie le poids par trois.
+
+Trois leviers permettent de revenir en arrière, dans `outils/encode-frames.sh` :
+
+| Levier | Effet |
+| --- | --- |
+| `CRF_BUREAU` 38 → 43 | environ 5 Mo, mais l'image redevient molle |
+| passer à 90 frames au lieu de 120 | environ 11 Mo, scrub encore fluide (22 px par frame) |
+| `LARGEUR_BUREAU` 1920 → 1600 | environ 10 Mo, léger flou sur écran 1440 |
+
+Le poids total compte moins qu'il n'y paraît : les frames arrivent en tâche de
+fond après le premier rendu, et c'est l'affiche seule qui détermine le LCP.
+Le point reste à arbitrer avec l'enseignant, et le chiffre du cahier des charges
+à corriger en conséquence.
 
 ### Les replis
 

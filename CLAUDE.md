@@ -20,8 +20,8 @@ Cibles : dernières versions de Chrome, Edge et Safari, sur ordinateur et télé
 
 Conséquences pratiques :
 
-- Les frames du hero sont en **AVIF**, sans jumeau WebP par frame. Seules les
-  affiches statiques ont un repli WebP.
+- Les 120 frames du hero sont en **AVIF** (jeux 1920 px et 1080 px), sans jumeau
+  WebP par frame. Seules les affiches statiques ont un repli WebP.
 - Les fonctionnalités « Baseline newly available » sont utilisables sans repli
   dès lors qu'elles sont gérées par Chrome, Edge et Safari.
 - Un repli reste obligatoire pour ce qui touche à l'accessibilité
