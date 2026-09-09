@@ -1,0 +1,531 @@
+/* =========================================================
+   GVA — Genève Aéroport
+   Feuille de style principale.
+
+   Ordre du fichier :
+   1. Jetons de design (couleurs, mesures, typographie)
+   2. Réglages de base
+   3. Éléments réutilisables (boutons)
+   4. En-tête et navigation
+   5. Hero scrubbé
+   6. Section suivante (repère provisoire)
+   7. Responsive
+   8. Mouvements réduits
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   1. Jetons de design — repris du design system de la maquette
+   --------------------------------------------------------- */
+
+:root {
+  /* Couleurs */
+  --blanc-casse: #F7F8FA;
+  --bleu-nuit:   #0B1F3A;
+  --accent:      #E4002B;
+  --gris-texte:  #5A6472;
+  --surface:     #FFFFFF;
+
+  /* Mesures. La marge suit la largeur de l'écran : 96 px sur la
+     maquette 1440, 20 px sur la maquette mobile 390. */
+  --marge: clamp(20px, 6.67vw, 96px);
+  --hauteur-entete: 88px;
+  --rayon: 12px;
+  --rayon-large: 16px;
+
+  /* Typographie. Le titre vaut 88 px sur 1440 px, soit 6.11vw. */
+  --titre-hero: clamp(2.25rem, 6.11vw, 5.5rem);
+
+  /* Durées d'animation, reprises des annotations de la maquette */
+  --duree-palier: 240ms;
+  --duree-indice: 200ms;
+  --duree-cta: 320ms;
+  --sortie: cubic-bezier(0, 0, .2, 1); /* ease-out */
+}
+
+
+/* ---------------------------------------------------------
+   2. Réglages de base
+   --------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--blanc-casse);
+  color: var(--bleu-nuit);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.lien-evitement {
+  position: absolute;
+  top: -100px;
+  left: var(--marge);
+  z-index: 100;
+  padding: 12px 20px;
+  border-radius: var(--rayon);
+  background: var(--surface);
+  color: var(--bleu-nuit);
+  font-weight: 600;
+  transition: top 160ms var(--sortie);
+}
+.lien-evitement:focus { top: 16px; }
+
+
+/* ---------------------------------------------------------
+   3. Boutons — hauteur 48, rayon 12, padding 0 24
+      (le design system de la maquette, décliné en trois variantes)
+   --------------------------------------------------------- */
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 24px;
+  border: 1px solid transparent;
+  border-radius: var(--rayon);
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 160ms var(--sortie),
+              border-color 160ms var(--sortie),
+              color 160ms var(--sortie),
+              transform 160ms var(--sortie);
+}
+.bouton:active { transform: translateY(1px); }
+
+/* Fond blanc sur photo — bouton « Mon vol » de la barre de navigation */
+.bouton--clair {
+  height: 44px;
+  padding: 0 22px;
+  background: var(--surface);
+  color: var(--bleu-nuit);
+}
+.bouton--clair:hover { background: #E9ECF2; }
+
+/* Appel à l'action principal en fin de hero */
+.bouton--accent {
+  height: 52px;
+  padding: 0 26px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 16px;
+}
+.bouton--accent:hover { background: #C10025; }
+
+/* Appel à l'action secondaire sur photo */
+.bouton--contour {
+  height: 52px;
+  padding: 0 26px;
+  border-color: rgba(255, 255, 255, .6);
+  color: #fff;
+  font-size: 16px;
+}
+.bouton--contour:hover {
+  background: rgba(255, 255, 255, .12);
+  border-color: #fff;
+}
+
+
+/* ---------------------------------------------------------
+   4. En-tête
+      Transparente par-dessus le hero pendant tout le scrub ;
+      elle ne passe en fond blanc qu'après la bascule.
+   --------------------------------------------------------- */
+
+.entete {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: var(--hauteur-entete);
+  color: #fff;
+  transition: background-color var(--duree-cta) var(--sortie),
+              color var(--duree-cta) var(--sortie),
+              box-shadow var(--duree-cta) var(--sortie);
+}
+
+.entete__inner {
+  height: 100%;
+  padding: 0 var(--marge);
+  display: flex;
+  align-items: center;
+  gap: 56px;
+}
+
+.entete--solide {
+  background: rgba(255, 255, 255, .82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--bleu-nuit);
+  box-shadow: 0 1px 0 rgba(11, 31, 58, .08);
+}
+.entete--solide .bouton--clair {
+  background: var(--bleu-nuit);
+  color: #fff;
+}
+.entete--solide .bouton--clair:hover { background: #16305A; }
+
+.marque {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+.marque__tiret { color: var(--accent); }
+.marque__court { display: none; }
+
+.nav-principale {
+  flex: 1;
+}
+.nav-principale ul {
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  font-size: 15px;
+  font-weight: 500;
+}
+.nav-principale a { transition: color 160ms var(--sortie); }
+.nav-principale a:hover { color: var(--accent); }
+
+.entete__actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.langues {
+  font-size: 14px;
+  font-weight: 500;
+}
+.langues__active { font-weight: 600; }
+.langues__sep,
+.langues a { opacity: .5; }
+.langues a:hover { opacity: 1; }
+
+/* Bouton du menu mobile — masqué au-dessus de 768 px */
+.burger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.burger__trait {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 200ms var(--sortie), opacity 200ms var(--sortie);
+}
+.burger[aria-expanded="true"] .burger__trait:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger[aria-expanded="true"] .burger__trait:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] .burger__trait:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+
+/* ---------------------------------------------------------
+   5. Hero scrubbé
+
+   .hero          conteneur ; ScrollTrigger lui ajoute l'espace
+                  de défilement nécessaire à l'épinglage.
+   .hero__plateau ce qui reste collé à l'écran (100vh).
+   .hero__canvas  la frame courante, dessinée par main.js.
+   --------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  background: var(--bleu-nuit);
+}
+
+.hero__plateau {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  color: #fff;
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+}
+
+/* L'affiche est l'image LCP. Le canvas la recouvre dès qu'il a
+   dessiné sa première frame. */
+.hero__affiche,
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__canvas {
+  opacity: 0;
+  transition: opacity 200ms var(--sortie);
+}
+.hero--canvas-pret .hero__canvas { opacity: 1; }
+
+.hero__voile {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+              rgba(11, 31, 58, .55) 0%,
+              rgba(11, 31, 58, .15) 40%,
+              rgba(11, 31, 58, .65) 100%);
+}
+
+/* Bloc de titres. Les quatre paliers sont empilés et alignés par
+   le bas : le bloc grandit vers le haut, comme sur la maquette. */
+.hero__contenu {
+  position: absolute;
+  left: var(--marge);
+  right: var(--marge);
+  bottom: 190px;
+  max-width: 820px;
+}
+
+.hero__palier {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duree-palier) var(--sortie),
+              visibility 0s linear var(--duree-palier);
+}
+.hero__palier.est-actif {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--duree-palier) var(--sortie),
+              visibility 0s;
+}
+
+.hero__surtitre {
+  margin-bottom: 20px;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.hero__titre {
+  font-size: var(--titre-hero);
+  font-weight: 600;
+  letter-spacing: -.035em;
+  line-height: 1;
+}
+
+.hero__sous-titre {
+  margin-top: 20px;
+  color: rgba(255, 255, 255, .8);
+  font-size: 19px;
+}
+
+/* Les deux appels à l'action n'entrent qu'en toute fin de scrub. */
+.hero__actions {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--duree-cta) var(--sortie),
+              transform var(--duree-cta) var(--sortie);
+}
+.hero--fin .hero__actions {
+  opacity: 1;
+  transform: none;
+}
+
+/* Repère « Scrollez pour découvrir » : disparaît dès 40 px de scroll. */
+.hero__indice {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: opacity var(--duree-indice) var(--sortie);
+}
+.hero__fleche { font-size: 22px; line-height: 1; }
+.hero__indice.est-masque { opacity: 0; }
+
+/* Barre de progression : largeur = progression du scrub.
+   On anime scaleX, pris en charge par le compositeur. */
+.hero__progression {
+  position: absolute;
+  left: var(--marge);
+  right: var(--marge);
+  bottom: 48px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, .28);
+  overflow: hidden;
+}
+.hero__progression-barre {
+  height: 100%;
+  border-radius: 2px;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+
+/* ---------------------------------------------------------
+   6. Section suivante — repère provisoire
+   --------------------------------------------------------- */
+
+.section-suivante {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  padding: 120px var(--marge);
+  background: var(--blanc-casse);
+}
+.section-suivante__inner { max-width: 720px; }
+
+.etiquette {
+  margin-bottom: 14px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.section-suivante h2 {
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.1;
+}
+.section-suivante__texte {
+  margin-top: 20px;
+  color: var(--gris-texte);
+}
+.section-suivante__note {
+  margin-top: 32px;
+  padding: 12px 18px;
+  border: 1px dashed var(--accent);
+  border-radius: var(--rayon);
+  background: #FFF4F6;
+  color: var(--bleu-nuit);
+  font-size: 13px;
+  display: inline-block;
+}
+
+
+/* ---------------------------------------------------------
+   7. Responsive — bascule sur la maquette mobile 390 px
+   --------------------------------------------------------- */
+
+@media (max-width: 767px) {
+  :root { --hauteur-entete: 64px; }
+
+  .entete__inner { gap: 12px; }
+  .marque__long { display: none; }
+  .marque__court { display: inline; }
+
+  /* La navigation devient un panneau déroulant */
+  .nav-principale {
+    position: absolute;
+    top: var(--hauteur-entete);
+    left: 0;
+    right: 0;
+    flex: none;
+    padding: 8px var(--marge) 24px;
+    background: var(--bleu-nuit);
+    color: #fff;
+    display: none;
+  }
+  .nav-principale.est-ouverte { display: block; }
+  .nav-principale ul {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 4px;
+  }
+  .nav-principale a {
+    display: block;
+    padding: 14px 0;
+    font-size: 17px;
+  }
+
+  .entete__actions { margin-left: auto; gap: 12px; }
+  .bouton--clair { display: none; }
+  .burger { display: flex; }
+
+  .hero__contenu { bottom: 140px; }
+  .hero__surtitre { margin-bottom: 14px; font-size: 12px; }
+  .hero__sous-titre { font-size: 16px; }
+  .hero__actions { margin-top: 22px; }
+  .bouton--accent, .bouton--contour { height: 48px; font-size: 15px; }
+
+  .hero__indice { bottom: 72px; font-size: 11px; gap: 8px; }
+  .hero__progression { bottom: 32px; }
+}
+
+
+/* ---------------------------------------------------------
+   8. Mouvements réduits
+      Pas de scrub : la maquette demande une image fixe et le
+      titre final. main.js n'initialise alors aucun ScrollTrigger.
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* Classe posée par main.js quand le scrub ne peut pas tourner
+   (mouvements réduits, ou frames indisponibles). */
+.hero--statique .hero__indice,
+.hero--statique .hero__progression {
+  display: none;
+}
+.hero--statique .hero__actions {
+  opacity: 1;
+  transform: none;
+}

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "gva-site",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "serve", "GVA_SITE", "-l", "4173"],
+      "port": 4173
+    }
+  ]
+}
