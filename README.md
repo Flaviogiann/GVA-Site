@@ -31,7 +31,6 @@ Puis ouvrir `http://localhost:4173`.
 | 4 · Accès & Parking | à faire — jalon J5 |
 | 5 · Boutiques & restaurants | à faire — jalon J5 |
 | 6 · Pied de page | à faire — jalon J5 |
-| PWA | à faire — jalon J6 |
 
 ## Arborescence
 
@@ -155,7 +154,7 @@ normale avec une image fixe :
 
 - [ ] Trancher la question du filigrane « Google Earth » (voir Crédits).
 - [ ] Auto-héberger la police Inter (aujourd'hui chargée depuis Google Fonts,
-      alors que le cahier des charges demande un fonctionnement hors ligne).
+      alors que le cahier des charges la demande auto-hébergée).
 - [ ] Remplacer la section 2 provisoire par l'exploration du terminal.
 - [ ] Mesurer avec Lighthouse et consigner le résultat.
 - [ ] Tester sur iPhone et sur Android réels.

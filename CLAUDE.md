@@ -10,7 +10,7 @@ démonstration du site public de Genève Aéroport, d'après la maquette
 - HTML5, CSS3 et JavaScript ES6 **sans framework** (ni React, ni Vue, ni Bootstrap).
 - GSAP 3.13 + ScrollTrigger, chargés depuis `js/vendor/` (pas de CDN).
 - Aucun outil de compilation : le site doit tourner derrière un simple serveur statique.
-- Page unique. Les fichiers PWA viendront à la racine au jalon J6.
+- Page unique. Pas de PWA : abandonnée en version N°2 du cahier des charges (09.09.2026).
 - Textes de l'interface et commentaires du code **en français**.
 
 ## Support navigateurs
