@@ -324,7 +324,11 @@ let glisser = null;
 prisePanneau.addEventListener('pointerdown', (e) => {
   if (!modeFeuille || e.target.closest('button')) return;
   glisser = { depart: e.clientY, ecart: 0, pointeur: e.pointerId };
-  prisePanneau.setPointerCapture(e.pointerId);
+  try {
+    prisePanneau.setPointerCapture(e.pointerId);
+  } catch {
+    // pointeur déjà relâché : le geste continue sans capture
+  }
   panneau.classList.add('est-glisse');
 });
 

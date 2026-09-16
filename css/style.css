@@ -685,15 +685,26 @@ svg[viewBox="0 0 24 24"] {
   cursor: pointer;
   opacity: 0;
   /* --nom-decalage : décalage vertical choisi par exploration-3d.js
-     pour éviter qu'un nom en recouvre un autre. */
+     pour qu'un nom n'en recouvre pas un autre. */
   transform: translate(-4px, calc(-50% + var(--nom-decalage, 0px)));
   transition: opacity 160ms var(--sortie), transform 160ms var(--sortie);
 }
-/* Près du bord droit, le nom passe à gauche de la pastille. */
-.nom-a-gauche .pastille__nom {
+
+/* data-nom, posé par exploration-3d.js : côté où le nom s'affiche. */
+.pastille[data-nom="gauche"] .pastille__nom {
   left: auto;
   right: 34px;
   transform: translate(4px, calc(-50% + var(--nom-decalage, 0px)));
+}
+.pastille[data-nom="haut"] .pastille__nom {
+  left: 0;
+  top: calc(-26px + var(--nom-decalage, 0px));
+  transform: translate(-50%, calc(-100% + 4px));
+}
+.pastille[data-nom="bas"] .pastille__nom {
+  left: 0;
+  top: calc(26px + var(--nom-decalage, 0px));
+  transform: translate(-50%, -4px);
 }
 
 /* Survol : le disque grossit (40 → 48 px) et le nom apparaît. */
@@ -709,24 +720,47 @@ svg[viewBox="0 0 24 24"] {
   animation: none;
 }
 
-.pastille:hover .pastille__nom,
-.pastille.est-survolee .pastille__nom,
-.pastille.est-signalee .pastille__nom,
-.scene3d--noms .pastille__nom {
+:is(.pastille:hover, .pastille.est-survolee, .pastille.est-signalee, .scene3d--noms .pastille) .pastille__nom {
   opacity: 1;
   pointer-events: auto;
   transform: translate(0, calc(-50% + var(--nom-decalage, 0px)));
 }
+:is(.pastille:hover, .pastille.est-survolee, .pastille.est-signalee, .scene3d--noms .pastille)[data-nom="haut"] .pastille__nom {
+  transform: translate(-50%, -100%);
+}
+:is(.pastille:hover, .pastille.est-survolee, .pastille.est-signalee, .scene3d--noms .pastille)[data-nom="bas"] .pastille__nom {
+  transform: translate(-50%, 0);
+}
+
 /* Le disque survolé grossit : le nom s'écarte d'autant. */
 :is(.pastille:hover, .pastille.est-survolee, .pastille.est-signalee) .pastille__nom { left: 38px; }
-:is(.pastille:hover, .pastille.est-survolee, .pastille.est-signalee).nom-a-gauche .pastille__nom {
+:is(.pastille:hover, .pastille.est-survolee, .pastille.est-signalee)[data-nom="gauche"] .pastille__nom {
   left: auto;
   right: 38px;
 }
+:is(.pastille:hover, .pastille.est-survolee, .pastille.est-signalee)[data-nom="haut"] .pastille__nom,
+:is(.pastille:hover, .pastille.est-survolee, .pastille.est-signalee)[data-nom="bas"] .pastille__nom { left: 0; }
+
 /* Tous les noms affichés : un peu plus compacts. */
 .scene3d--noms .pastille__nom {
   padding: 7px 11px;
   font-size: 12px;
+}
+
+/* Trait de rappel entre un nom décalé et sa pastille. Il part du
+   centre du disque, qui le recouvre. */
+.scene3d--noms .pastille[data-trait]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -.75px;
+  width: var(--trait-longueur, 0);
+  height: 1.5px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, .8);
+  transform-origin: 0 50%;
+  transform: rotate(var(--trait-angle, 0rad));
+  pointer-events: none;
 }
 
 /* Panneau ouvert : les autres pastilles s'effacent, l'active passe
@@ -1177,7 +1211,8 @@ svg[viewBox="0 0 24 24"] {
     gap: 28px;
   }
   .exploration__intro { width: auto; }
-  .exploration__vue { height: min(72svh, 640px); min-height: 420px; }
+  /* En colonne, flex: 1 annulerait la hauteur : on la fixe. */
+  .exploration__vue { flex: none; height: min(72svh, 640px); min-height: 420px; }
   .legende {
     display: flex;
     flex-wrap: wrap;
@@ -1243,10 +1278,24 @@ svg[viewBox="0 0 24 24"] {
     right: 10px;
     bottom: 10px;
     justify-content: center;
-    gap: 12px;
+    gap: 14px;
+    padding: 8px 10px;
     font-size: 11px;
+    white-space: nowrap;
   }
+  .geste { gap: 6px; }
   .geste svg { width: 16px; height: 16px; }
+  .geste--deplacer { display: none; }
+
+  /* Pastilles plus petites : l'île est plus petite. */
+  .pastille__disque {
+    left: -16px;
+    top: -16px;
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+  .pastille__nom { left: 28px; }
 
   .commandes { gap: 8px; }
   .commande { width: 44px; height: 44px; }

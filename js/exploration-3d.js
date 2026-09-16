@@ -195,7 +195,9 @@ export async function creerScene3D(options) {
   soleil.position.set(-11, 21, 13);
   soleil.castShadow = true;
   soleil.shadow.mapSize.setScalar(tactile ? 1024 : 2048);
-  Object.assign(soleil.shadow.camera, { left: -15, right: 15, top: 15, bottom: -15, near: 1, far: 70 });
+  // Le cadre des ombres doit couvrir tout le modèle (rayon 10).
+  Object.assign(soleil.shadow.camera, { left: -13, right: 13, top: 13, bottom: -13, near: 1, far: 70 });
+  soleil.shadow.camera.updateProjectionMatrix();
   soleil.shadow.bias = -0.0005;
   soleil.shadow.radius = 3;
   scene.add(soleil);
@@ -517,20 +519,25 @@ export async function creerScene3D(options) {
 
 
   /* Placement des noms
-     Par défaut, le nom s'affiche à droite de sa pastille. Il passe à
-     gauche s'il sortirait du cadre. Quand tous les noms sont affichés
-     (bouton œil), chacun cherche une place libre parmi quelques
-     positions voisines, pour ne recouvrir ni un autre nom ni une
-     autre pastille. La place trouvée est gardée tant qu'elle reste
-     libre, pour que les noms ne sautent pas pendant la rotation. */
+     Par défaut, le nom s'affiche à droite de sa pastille, ou à gauche
+     s'il sortirait du cadre. Quand tous les noms sont affichés (bouton
+     œil), chacun essaie une douzaine de positions autour de sa
+     pastille et garde celle qui recouvre le moins les autres noms et
+     les autres pastilles. La position est conservée tant qu'elle reste
+     presque aussi bonne, pour que les noms ne sautent pas pendant la
+     rotation. */
 
-  const ECART_NOM = 34;          // du centre de la pastille au bord du nom
-  const RAYON_DISQUE = 22;
+  /* Mesures reprises du CSS (pastilles plus petites sur téléphone). */
+  const ecranEtroit = window.matchMedia("(max-width: 767px)");
+  let ECART_NOM = 34;            // du centre de la pastille au bord du nom
+  let RAYON_DISQUE = 22;
   const MARGE_NOM = 4;
   const ESSAIS = [
     ['droite', 0], ['gauche', 0],
-    ['droite', -28], ['droite', 28], ['gauche', -28], ['gauche', 28],
-    ['droite', -56], ['droite', 56], ['gauche', -56], ['gauche', 56],
+    ['droite', -30], ['droite', 30], ['gauche', -30], ['gauche', 30],
+    ['haut', 0], ['bas', 0],
+    ['droite', -60], ['droite', 60], ['gauche', -60], ['gauche', 60],
+    ['haut', -30], ['bas', 30],
   ];
   const tailles = new WeakMap();
   const choix = new WeakMap();
@@ -547,18 +554,30 @@ export async function creerScene3D(options) {
   document.fonts?.ready.then(() => { pastilles.forEach((el) => tailles.delete(el)); });
 
   function boiteNom(p, t, cote, dy) {
-    const x1 = cote === 'droite' ? p.x + ECART_NOM : p.x - ECART_NOM - t.l;
-    const y1 = p.y + dy - t.h / 2;
+    let x1;
+    let y1;
+    if (cote === 'haut' || cote === 'bas') {
+      x1 = p.x - t.l / 2;
+      y1 = cote === 'haut' ? p.y - ECART_NOM + 8 - t.h + dy : p.y + ECART_NOM - 8 + dy;
+    } else {
+      x1 = cote === 'droite' ? p.x + ECART_NOM : p.x - ECART_NOM - t.l;
+      y1 = p.y + dy - t.h / 2;
+    }
     return { x1, x2: x1 + t.l, y1, y2: y1 + t.h };
   }
 
-  const chevauche = (a, b) =>
-    a.x1 < b.x2 + MARGE_NOM && a.x2 + MARGE_NOM > b.x1 &&
-    a.y1 < b.y2 + MARGE_NOM && a.y2 + MARGE_NOM > b.y1;
+  /* Surface de recouvrement de deux boîtes, marge comprise. */
+  function recouvrement(a, b) {
+    const l = Math.min(a.x2, b.x2) + MARGE_NOM - Math.max(a.x1, b.x1);
+    const h = Math.min(a.y2, b.y2) + MARGE_NOM - Math.max(a.y1, b.y1);
+    return l > 0 && h > 0 ? l * h : 0;
+  }
 
   let tousAvant = false;
 
   function placerNoms(largeur, hauteur) {
+    ECART_NOM = ecranEtroit.matches ? 28 : 34;
+    RAYON_DISQUE = ecranEtroit.matches ? 18 : 22;
     const tous = conteneur.classList.contains('scene3d--noms');
     if (tous !== tousAvant) {
       // Les noms sont plus compacts en mode « tous » : on remesure.
@@ -578,25 +597,54 @@ export async function creerScene3D(options) {
       const t = tailleNom(p.el);
       if (!t.l) continue;
 
-      const dansCadre = (b) => b.x1 >= 4 && b.x2 <= largeur - 4 && b.y1 >= 4 && b.y2 <= hauteur - 4;
-      const libre = (b) =>
-        dansCadre(b) &&
-        (!tous || (
-          !occupes.some((o) => chevauche(b, o)) &&
-          !disques.some((d) => d.p !== p && chevauche(b, d))
-        ));
+      /* Coût d'une position : sortir du cadre est exclu ; recouvrir un
+         nom coûte trois fois plus que recouvrir une pastille ; à
+         égalité, on préfère la position la plus proche du défaut. */
+      const cout = (essai, rang) => {
+        const b = boiteNom(p, t, ...essai);
+        let c = rang;
+        if (b.x1 < 4 || b.x2 > largeur - 4 || b.y1 < 4 || b.y2 > hauteur - 4) c += 1e7;
+        if (tous) {
+          for (const o of occupes) c += 3 * recouvrement(b, o);
+          for (const d of disques) if (d.p !== p) c += recouvrement(b, d);
+        }
+        return c;
+      };
 
       const essais = tous ? ESSAIS : ESSAIS.slice(0, 2);
+      let retenu = essais[0];
+      let meilleur = Infinity;
+      essais.forEach((essai, rang) => {
+        const c = cout(essai, rang);
+        if (c < meilleur) {
+          meilleur = c;
+          retenu = essai;
+        }
+      });
+
       const precedent = choix.get(p.el);
-      let retenu = precedent && essais.includes(precedent) && libre(boiteNom(p, t, ...precedent))
-        ? precedent
-        : null;
-      if (!retenu) retenu = essais.find(([cote, dy]) => libre(boiteNom(p, t, cote, dy))) ?? essais[0];
+      const rangPrecedent = essais.indexOf(precedent);
+      if (rangPrecedent >= 0 && cout(precedent, rangPrecedent) <= meilleur + 60) retenu = precedent;
 
       if (retenu !== precedent) {
         choix.set(p.el, retenu);
-        p.el.classList.toggle('nom-a-gauche', retenu[0] === 'gauche');
-        p.el.style.setProperty('--nom-decalage', `${retenu[1]}px`);
+        const [cote, dy] = retenu;
+        p.el.dataset.nom = cote;
+        p.el.style.setProperty('--nom-decalage', `${dy}px`);
+
+        /* Un nom décalé est relié à sa pastille par un trait, qui va
+           du centre du disque au bord le plus proche du nom. */
+        if (dy) {
+          const vers = {
+            droite: [ECART_NOM, dy], gauche: [-ECART_NOM, dy],
+            haut: [0, dy - ECART_NOM + 8], bas: [0, dy + ECART_NOM - 8],
+          }[cote];
+          p.el.dataset.trait = '';
+          p.el.style.setProperty('--trait-longueur', `${Math.hypot(...vers).toFixed(1)}px`);
+          p.el.style.setProperty('--trait-angle', `${Math.atan2(vers[1], vers[0]).toFixed(3)}rad`);
+        } else {
+          delete p.el.dataset.trait;
+        }
       }
       occupes.push(boiteNom(p, t, ...retenu));
     }
