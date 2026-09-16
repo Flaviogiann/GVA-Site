@@ -681,5 +681,12 @@ export async function creerScene3D(options) {
 
   redimensionner();
   surEtat('pret');
+
+  /* Avec ?debug dans l'adresse, la scène est accessible depuis la
+     console : window.gva3d.camera, .controles, .scene… */
+  if (new URLSearchParams(location.search).has('debug')) {
+    window.gva3d = { THREE, scene, camera, controles, racine, cibles, api, boiteMonde };
+  }
+
   return api;
 }

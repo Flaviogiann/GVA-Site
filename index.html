@@ -119,18 +119,139 @@
     </div>
   </section>
 
-  <!-- Section suivante : simple repère pour vérifier la bascule du
-       sticky en fin de scrub. Sera remplacée par « 06 · Exploration 3D ». -->
-  <section class="section-suivante" id="services">
-    <div class="section-suivante__inner">
-      <p class="etiquette">Section 2</p>
-      <h2>Explorez l'aéroport</h2>
-      <p class="section-suivante__texte">
-        Du dépôt des bagages à la porte d'embarquement, parcourez le terminal
-        en volume et repérez chaque étape de votre passage.
-      </p>
-      <p class="section-suivante__note">Section à réaliser — jalon J4.</p>
+  <!-- ============================================================
+       06–07 · Exploration 3D
+       Le modèle est un fichier .glb : remplacer modeles/terminal.glb
+       ou changer data-modele suffit (voir modeles/LISEZMOI.md).
+       ============================================================ -->
+  <section class="exploration" id="services" aria-labelledby="exploration-titre">
+    <div class="exploration__inner">
+
+      <div class="exploration__intro">
+        <p class="exploration__surtitre">L'aéroport en 3D</p>
+        <h2 class="exploration__titre" id="exploration-titre">Explorez l'aéroport</h2>
+        <p class="exploration__texte">
+          Du dépôt des bagages à la porte d'embarquement, parcourez le terminal
+          en volume et repérez chaque étape de votre passage.
+        </p>
+        <!-- Rempli par exploration.js depuis js/donnees/points-interet.js -->
+        <ol class="legende" aria-label="Points d'intérêt du terminal"></ol>
+      </div>
+
+      <div class="exploration__vue">
+        <div class="scene3d" data-modele="modeles/terminal.glb">
+
+          <div class="scene3d__toile" tabindex="0" role="application"
+               aria-label="Maquette 3D de l'aéroport" aria-describedby="scene3d-aide scene3d-clavier">
+            <canvas aria-hidden="true"></canvas>
+          </div>
+
+          <div class="scene3d__pastilles" aria-hidden="true"></div>
+
+          <div class="scene3d__outils scene3d__outils--gauche">
+            <button class="outil" type="button" id="bouton-noms" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/></svg>
+              <span class="outil__bulle">Afficher les noms</span>
+            </button>
+            <button class="outil" type="button" id="bouton-aide" aria-expanded="true" aria-controls="scene3d-aide">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.2"/></svg>
+              <span class="outil__bulle">Aide</span>
+            </button>
+          </div>
+
+          <div class="scene3d__outils scene3d__outils--droite">
+            <button class="outil" type="button" id="bouton-plein-ecran">
+              <svg class="icone-entrer" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg>
+              <svg class="icone-sortir" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5"/></svg>
+              <span class="outil__bulle">Plein écran</span>
+            </button>
+          </div>
+
+          <div class="scene3d__aide" id="scene3d-aide">
+            <p class="geste">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 0 1 13.2-4.9"/><path d="M18.4 3.4v3.9h-3.9"/><path d="M19.5 12a7.5 7.5 0 0 1-13.2 4.9"/><path d="M5.6 20.6v-3.9h3.9"/></svg>
+              <span data-tactile="Glisser à l'horizontale : pivoter">Glisser : pivoter</span>
+            </p>
+            <p class="geste">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M9.5 5.5 12 3l2.5 2.5M9.5 18.5 12 21l2.5-2.5M5.5 9.5 3 12l2.5 2.5M18.5 9.5 21 12l-2.5 2.5"/></svg>
+              <span data-tactile="Deux doigts : déplacer">Clic droit : déplacer</span>
+            </p>
+            <p class="geste">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5M10.5 8v5M8 10.5h5"/></svg>
+              <span data-tactile="Pincer : zoomer">Molette : zoomer</span>
+            </p>
+          </div>
+          <p class="visuellement-masque" id="scene3d-clavier">
+            Au clavier : flèches pour pivoter et incliner, plus et moins pour zoomer,
+            zéro pour revenir à la vue de départ.
+          </p>
+
+          <div class="scene3d__etat">
+            <div class="chargement">
+              <div class="chargement__barre" aria-hidden="true"><span></span></div>
+              <p class="chargement__texte" role="status">Chargement de la maquette 3D</p>
+              <p class="chargement__pourcentage" aria-hidden="true"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="commandes" role="group" aria-label="Commandes de la vue 3D">
+          <button class="commande" type="button" data-action="tourner-gauche">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12.5a7.5 7.5 0 1 0 2.4-5.5"/><path d="M4.4 3.6v4.7h4.7"/></svg>
+            <span class="outil__bulle">Pivoter à gauche</span>
+          </button>
+          <button class="commande" type="button" data-action="tourner-droite">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 12.5a7.5 7.5 0 1 1-2.4-5.5"/><path d="M19.6 3.6v4.7h-4.7"/></svg>
+            <span class="outil__bulle">Pivoter à droite</span>
+          </button>
+          <span class="commandes__separateur" aria-hidden="true"></span>
+          <button class="commande" type="button" data-action="zoom-arriere">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12h13"/></svg>
+            <span class="outil__bulle">Dézoomer</span>
+          </button>
+          <button class="commande" type="button" data-action="zoom-avant">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.5v13M5.5 12h13"/></svg>
+            <span class="outil__bulle">Zoomer</span>
+          </button>
+          <span class="commandes__separateur" aria-hidden="true"></span>
+          <button class="bouton bouton--blanc commandes__reinit" type="button" data-action="reinitialiser">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.2 12 4l8.5 7.2"/><path d="M6 9.4V20h12V9.4"/></svg>
+            <span class="commandes__reinit-texte">Réinitialiser la vue</span>
+          </button>
+        </div>
+      </div>
     </div>
+
+    <!-- Panneau d'information : non modal sur ordinateur, feuille
+         modale sur téléphone (exploration.js choisit à l'ouverture). -->
+    <dialog class="panneau" id="panneau" aria-labelledby="panneau-titre">
+      <div class="panneau__boite">
+        <div class="panneau__prise">
+          <div class="panneau__poignee" aria-hidden="true"></div>
+          <div class="panneau__entete">
+            <div class="panneau__intitule">
+              <span class="panneau__numero" aria-hidden="true"></span>
+              <p class="panneau__zone"></p>
+              <h3 class="panneau__titre" id="panneau-titre" tabindex="-1"></h3>
+            </div>
+            <button class="panneau__fermer" type="button" aria-label="Fermer le panneau">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="panneau__corps">
+          <div class="panneau__photo"></div>
+          <p class="panneau__texte"></p>
+          <dl class="panneau__infos"></dl>
+        </div>
+
+        <div class="panneau__actions">
+          <button class="bouton bouton--sombre" type="button" data-action="voir-sur-plan">Voir sur le plan</button>
+          <a class="panneau__lien" href="#"></a>
+        </div>
+      </div>
+    </dialog>
   </section>
 
 </main>
@@ -138,5 +259,17 @@
 <script src="js/vendor/gsap.min.js"></script>
 <script src="js/vendor/ScrollTrigger.min.js"></script>
 <script src="js/main.js"></script>
+
+<!-- three.js est un module ES : la carte d'import permet d'écrire
+     import 'three' sans outil de compilation. -->
+<script type="importmap">
+  {
+    "imports": {
+      "three": "./js/vendor/three/three.module.js",
+      "three/addons/": "./js/vendor/three/addons/"
+    }
+  }
+</script>
+<script type="module" src="js/exploration.js"></script>
 </body>
 </html>
