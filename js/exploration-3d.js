@@ -510,6 +510,8 @@ export async function creerScene3D(options) {
       const y = (1 - projete.y) / 2 * hauteur;
       const horsChamp = projete.z > 1 || x < -24 || x > largeur + 24 || y < -24 || y > hauteur + 24;
       el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
+      // La pastille la plus proche de la caméra passe devant les autres.
+      el.style.setProperty('--profondeur', Math.round((1 - projete.z) * 5000));
       el.classList.toggle('est-hors-champ', horsChamp);
       if (!horsChamp) places.push({ el, x, y });
     }
@@ -576,8 +578,8 @@ export async function creerScene3D(options) {
   let tousAvant = false;
 
   function placerNoms(largeur, hauteur) {
-    ECART_NOM = ecranEtroit.matches ? 28 : 34;
-    RAYON_DISQUE = ecranEtroit.matches ? 18 : 22;
+    ECART_NOM = ecranEtroit.matches ? 26 : 34;
+    RAYON_DISQUE = ecranEtroit.matches ? 16 : 22;
     const tous = conteneur.classList.contains('scene3d--noms');
     if (tous !== tousAvant) {
       // Les noms sont plus compacts en mode « tous » : on remesure.

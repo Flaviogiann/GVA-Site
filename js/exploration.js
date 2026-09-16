@@ -264,6 +264,7 @@ function fermer() {
   minuterieFermeture = setTimeout(() => {
     panneau.classList.remove('est-fermant');
     panneau.close();
+    rendreDefilement();
     // Le focus revient après close() : tant que la feuille modale
     // est ouverte, le reste de la page est inerte.
     if (aRendre?.isConnected) aRendre.focus({ preventScroll: true });
@@ -277,6 +278,7 @@ function fermerSansAnimation() {
   panneau.classList.remove('est-ouvert', 'est-fermant');
   panneau.style.transform = '';
   panneau.close();
+  rendreDefilement();
   section.classList.remove('exploration--panneau-ouvert');
   pointActif = null;
   declencheur = null;
@@ -365,13 +367,39 @@ function cadrerSection() {
 }
 
 /* Sur téléphone, la feuille couvre 70 % de l'écran : on remonte la
-   vue 3D juste sous l'en-tête pour en garder le haut visible. */
+   vue 3D juste sous l'en-tête pour en garder le haut visible.
+   Si la section est en bas de page, la page ne peut pas remonter
+   assez : une marge temporaire sous le contenu, cachée par la
+   feuille, donne la place nécessaire. À la fermeture, la page revient
+   où le visiteur l'avait laissée. */
+let defilementAvantFeuille = null;
+
 function margeHaute() {
   return entete.getBoundingClientRect().bottom + 8;
 }
+
 function cadrerPourFeuille() {
+  defilementAvantFeuille = window.scrollY;
+  document.body.style.paddingBottom = '75svh';
   const ecart = scene3d.getBoundingClientRect().top - margeHaute();
   if (Math.abs(ecart) > 4) window.scrollBy({ top: ecart, behavior: comportement });
+}
+
+function rendreDefilement() {
+  if (defilementAvantFeuille === null) return;
+  const position = defilementAvantFeuille;
+  defilementAvantFeuille = null;
+  window.scrollTo({ top: position, behavior: comportement });
+  // La marge ne part qu'une fois la page revenue, sinon elle sauterait.
+  const retirer = () => {
+    if (defilementAvantFeuille === null) document.body.style.paddingBottom = '';
+  };
+  if ('onscrollend' in window) {
+    window.addEventListener('scrollend', retirer, { once: true });
+    setTimeout(retirer, 1200);
+  } else {
+    setTimeout(retirer, 700);
+  }
 }
 
 function positionDans(el, ancetre) {
@@ -544,12 +572,17 @@ async function chargerScene() {
     return;
   }
 
+  /* ?modele=chemin/vers/fichier.glb dans l'adresse permet d'essayer un
+     autre modèle sans toucher au HTML. */
+  const essai = new URLSearchParams(location.search).get('modele');
+  const modele = essai && /^[\w./-]+\.(glb|gltf)$/i.test(essai) ? essai : scene3d.dataset.modele;
+
   try {
     const { creerScene3D } = await import('./exploration-3d.js');
     scene = await creerScene3D({
       conteneur: scene3d,
       toile,
-      modele: scene3d.dataset.modele,
+      modele,
       points: POINTS,
       pastilles,
       surEtat: suivreChargement,

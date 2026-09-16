@@ -637,6 +637,7 @@ svg[viewBox="0 0 24 24"] {
   border: 0;
   background: none;
   pointer-events: none;
+  z-index: var(--profondeur, 0);
   will-change: transform;
   transition: opacity 200ms var(--sortie);
 }
@@ -710,7 +711,7 @@ svg[viewBox="0 0 24 24"] {
 /* Survol : le disque grossit (40 → 48 px) et le nom apparaît. */
 .pastille:hover,
 .pastille.est-survolee,
-.pastille.est-signalee { z-index: 2; }
+.pastille.est-signalee { z-index: 10001; }
 
 .pastille:hover .pastille__disque,
 .pastille.est-survolee .pastille__disque,
@@ -776,7 +777,7 @@ svg[viewBox="0 0 24 24"] {
   box-shadow: 0 0 0 10px rgba(228, 0, 43, .22);
   animation: none;
 }
-.pastille.est-active { z-index: 3; opacity: 1; }
+.pastille.est-active { z-index: 10000; opacity: 1; }
 
 /* --- Outils posés sur la vue --- */
 
@@ -942,7 +943,9 @@ svg[viewBox="0 0 24 24"] {
 }
 .chargement__pourcentage { color: #A9BBD2; }
 
-.scene3d--echec .chargement__barre { display: none; }
+.scene3d--echec .chargement__barre,
+.scene3d--echec .scene3d__outils,
+.scene3d--echec .scene3d__aide { display: none; }
 .scene3d--echec .chargement__texte {
   max-width: 34ch;
   color: #D3DEEC;
@@ -1237,7 +1240,7 @@ svg[viewBox="0 0 24 24"] {
   .exploration__surtitre { order: 1; font-size: 11px; margin-bottom: -10px; }
   .exploration__titre { order: 2; font-size: 32px; letter-spacing: -.02em; }
   .exploration__texte { order: 3; font-size: 15px; line-height: 1.6; }
-  .exploration__vue { order: 4; height: 62svh; min-height: 380px; max-height: 560px; gap: 16px; }
+  .exploration__vue { order: 4; height: min(54svh, 480px); min-height: 380px; gap: 16px; }
   .legende { order: 5; }
 
   .exploration--panneau-ouvert .exploration__intro { opacity: 1; }
@@ -1289,13 +1292,13 @@ svg[viewBox="0 0 24 24"] {
 
   /* Pastilles plus petites : l'île est plus petite. */
   .pastille__disque {
-    left: -16px;
-    top: -16px;
-    width: 32px;
-    height: 32px;
-    font-size: 13px;
+    left: -14px;
+    top: -14px;
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
   }
-  .pastille__nom { left: 28px; }
+  .pastille__nom { left: 26px; }
 
   .commandes { gap: 8px; }
   .commande { width: 44px; height: 44px; }
