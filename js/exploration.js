@@ -543,6 +543,7 @@ async function chargerScene() {
   try {
     const { creerScene3D } = await import('./exploration-3d.js');
     scene = await creerScene3D({
+      conteneur: scene3d,
       toile,
       modele: scene3d.dataset.modele,
       points: POINTS,

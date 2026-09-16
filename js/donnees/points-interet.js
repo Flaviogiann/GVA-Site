@@ -70,7 +70,7 @@ export const POINTS = [
       "Deux salons surplombent les pistes à l'étage : fauteuils, douches, " +
       "restauration légère et vue dégagée sur le Jura. Accès avec une carte de " +
       "fidélité, un billet en classe affaires ou une entrée à la journée.",
-    infos: [['Étage', 'Niveau 3'], ['Horaires', '05:00–22:00'], ['Entrée', 'dès CHF 45.–']],
+    infos: [['Étage', 'Niveau 3'], ['Horaires', '05:00–22:00'], ['Entrée', 'CHF 45.–']],
     photo: null,
     legendePhoto: 'salon panoramique',
     lien: { texte: 'Réserver un accès au salon', href: '#infos' },
@@ -83,7 +83,7 @@ export const POINTS = [
       "Les portes se répartissent entre le terminal principal et la jetée. " +
       "Comptez jusqu'à dix minutes de marche pour les plus éloignées ; votre " +
       "porte s'affiche environ 40 minutes avant le départ.",
-    infos: [['Étage', 'Niveau 2'], ['Portes', 'A à D'], ['À pied', '10 min max.']],
+    infos: [['Étage', 'Niveau 2'], ['Portes', 'A à D'], ['À pied', '≤ 10 min']],
     photo: null,
     legendePhoto: 'jetée et passerelles',
     lien: { texte: 'Suivre mon vol', href: '#vols' },

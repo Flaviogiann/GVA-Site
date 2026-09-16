@@ -153,6 +153,7 @@ function textureOmbre() {
 
 export async function creerScene3D(options) {
   const {
+    conteneur,           // la vue (.scene3d), qui porte les classes d'état
     toile,               // élément qui reçoit la souris et le clavier
     modele,              // adresse du fichier .glb
     points,              // données des points d'intérêt
@@ -488,10 +489,12 @@ export async function creerScene3D(options) {
   const lanceur = new THREE.Raycaster();
   const matricePrecedente = new THREE.Matrix4();
   let derniereOccultation = 0;
+  const places = [];   // positions à l'écran de l'image courante
 
   function placerPastilles() {
     const largeur = toile.clientWidth;
     const hauteur = toile.clientHeight;
+    places.length = 0;
 
     for (const [id, cible] of cibles) {
       const el = pastilles.get(id);
@@ -506,6 +509,96 @@ export async function creerScene3D(options) {
       const horsChamp = projete.z > 1 || x < -24 || x > largeur + 24 || y < -24 || y > hauteur + 24;
       el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
       el.classList.toggle('est-hors-champ', horsChamp);
+      if (!horsChamp) places.push({ el, x, y });
+    }
+
+    placerNoms(largeur, hauteur);
+  }
+
+
+  /* Placement des noms
+     Par défaut, le nom s'affiche à droite de sa pastille. Il passe à
+     gauche s'il sortirait du cadre. Quand tous les noms sont affichés
+     (bouton œil), chacun cherche une place libre parmi quelques
+     positions voisines, pour ne recouvrir ni un autre nom ni une
+     autre pastille. La place trouvée est gardée tant qu'elle reste
+     libre, pour que les noms ne sautent pas pendant la rotation. */
+
+  const ECART_NOM = 34;          // du centre de la pastille au bord du nom
+  const RAYON_DISQUE = 22;
+  const MARGE_NOM = 4;
+  const ESSAIS = [
+    ['droite', 0], ['gauche', 0],
+    ['droite', -28], ['droite', 28], ['gauche', -28], ['gauche', 28],
+    ['droite', -56], ['droite', 56], ['gauche', -56], ['gauche', 56],
+  ];
+  const tailles = new WeakMap();
+  const choix = new WeakMap();
+
+  function tailleNom(el) {
+    let t = tailles.get(el);
+    if (!t) {
+      const nom = el.querySelector('.pastille__nom');
+      t = { l: nom.offsetWidth, h: nom.offsetHeight };
+      if (t.l) tailles.set(el, t);
+    }
+    return t;
+  }
+  document.fonts?.ready.then(() => { pastilles.forEach((el) => tailles.delete(el)); });
+
+  function boiteNom(p, t, cote, dy) {
+    const x1 = cote === 'droite' ? p.x + ECART_NOM : p.x - ECART_NOM - t.l;
+    const y1 = p.y + dy - t.h / 2;
+    return { x1, x2: x1 + t.l, y1, y2: y1 + t.h };
+  }
+
+  const chevauche = (a, b) =>
+    a.x1 < b.x2 + MARGE_NOM && a.x2 + MARGE_NOM > b.x1 &&
+    a.y1 < b.y2 + MARGE_NOM && a.y2 + MARGE_NOM > b.y1;
+
+  let tousAvant = false;
+
+  function placerNoms(largeur, hauteur) {
+    const tous = conteneur.classList.contains('scene3d--noms');
+    if (tous !== tousAvant) {
+      // Les noms sont plus compacts en mode « tous » : on remesure.
+      tousAvant = tous;
+      pastilles.forEach((el) => tailles.delete(el));
+    }
+    const disques = places.map((p) => ({
+      p,
+      x1: p.x - RAYON_DISQUE, x2: p.x + RAYON_DISQUE,
+      y1: p.y - RAYON_DISQUE, y2: p.y + RAYON_DISQUE,
+    }));
+    const occupes = [];
+    // Du haut vers le bas : l'ordre reste stable d'une image à l'autre.
+    const ordre = [...places].sort((a, b) => a.y - b.y);
+
+    for (const p of ordre) {
+      const t = tailleNom(p.el);
+      if (!t.l) continue;
+
+      const dansCadre = (b) => b.x1 >= 4 && b.x2 <= largeur - 4 && b.y1 >= 4 && b.y2 <= hauteur - 4;
+      const libre = (b) =>
+        dansCadre(b) &&
+        (!tous || (
+          !occupes.some((o) => chevauche(b, o)) &&
+          !disques.some((d) => d.p !== p && chevauche(b, d))
+        ));
+
+      const essais = tous ? ESSAIS : ESSAIS.slice(0, 2);
+      const precedent = choix.get(p.el);
+      let retenu = precedent && essais.includes(precedent) && libre(boiteNom(p, t, ...precedent))
+        ? precedent
+        : null;
+      if (!retenu) retenu = essais.find(([cote, dy]) => libre(boiteNom(p, t, cote, dy))) ?? essais[0];
+
+      if (retenu !== precedent) {
+        choix.set(p.el, retenu);
+        p.el.classList.toggle('nom-a-gauche', retenu[0] === 'gauche');
+        p.el.style.setProperty('--nom-decalage', `${retenu[1]}px`);
+      }
+      occupes.push(boiteNom(p, t, ...retenu));
     }
   }
 
