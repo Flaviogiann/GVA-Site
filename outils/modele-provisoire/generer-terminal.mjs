@@ -663,10 +663,11 @@ for (const [n, [x, y, z]] of Object.entries(PASTILLES)) {
   aeroport.add(o);
 }
 
-// Cadrage imposé pour le point 5 : vue depuis le nord-est.
+// Cadrage imposé pour le point 5 : vue depuis le nord-est, par-dessus
+// les avions au contact. La caméra se place exactement ici.
 const vue5 = new THREE.Object3D();
 vue5.name = 'vue-5';
-vue5.position.set(8.5, 6.2, -7.5);
+vue5.position.set(15.5, 13, -15);
 aeroport.add(vue5);
 
 const nuages = new THREE.Group();
