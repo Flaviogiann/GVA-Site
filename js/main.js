@@ -256,7 +256,21 @@ function distanceScrub() {
    6. Le scrub
    --------------------------------------------------------- */
 
+/* Pour recalculer ses positions (au redimensionnement, au chargement),
+   ScrollTrigger coupe le défilement doux du CSS puis remonte la page
+   à 0. Mais Chrome ne relit pas le style avant window.scrollTo(0, 0) :
+   la remontée reste animée, la mesure se fait là où la page se trouve
+   encore, et le scrub démarre trop haut. En fin de séquence, le plateau
+   se décroche alors sous l'en-tête. On coupe le défilement doux
+   nous-mêmes, style recalculé ; ScrollTrigger le rétablit ensuite. */
+function couperDefilementDoux() {
+  document.documentElement.style.scrollBehavior = 'auto';
+  void document.documentElement.offsetHeight;   // force le recalcul du style
+}
+
 function demarrerScrub() {
+  ScrollTrigger.addEventListener('refreshInit', couperDefilementDoux);
+
   /* L'objet animé ne sert qu'à porter un numéro de frame : c'est
      GSAP qui le fait avancer, et onUpdate qui le lit. */
   const sequence = { index: 0 };

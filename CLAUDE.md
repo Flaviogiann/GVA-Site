@@ -82,3 +82,10 @@ navigateur ne peut pas les décoder isolément (`naturalWidth` vaut 0).
   en `flex: none` sous 1024 px.
 - L'épinglage du hero rallonge la page après chargement : une ancre dans
   l'adresse est visée à nouveau par `viserAncre()` dans `main.js`.
+- **`scroll-behavior: smooth` et ScrollTrigger** : pour se recalculer (chargement,
+  redimensionnement), ScrollTrigger coupe le défilement doux puis appelle
+  `scrollTo(0, 0)`. Chrome ne relit pas le style pour cette position : la remontée
+  reste animée et le scrub démarre décalé (bande bleu nuit sous l'en-tête en fin de
+  hero). `couperDefilementDoux()` (écouteur `refreshInit`, `main.js`) force le
+  recalcul. Test : redimensionner en plein scrub, `ScrollTrigger.getAll()[0].start`
+  doit rester à 0.
