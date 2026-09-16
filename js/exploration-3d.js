@@ -410,7 +410,12 @@ export async function creerScene3D(options) {
   }
 
   let derniereDestination = null;
-  const volActif = () => Boolean(gsap?.isTweening(etat));
+
+  /* Vol en cours. On le suit soi-même : gsap.isTweening() reste faux
+     jusqu'à l'image suivante, et deux appuis rapides sur une flèche
+     ne s'additionneraient pas. */
+  let volCourant = null;
+  const volActif = () => volCourant !== null;
 
   /* Point de départ d'un mouvement relatif (↺, +…) : si un vol est
      en cours, on part de sa destination, pour que des clics rapides
@@ -441,11 +446,17 @@ export async function creerScene3D(options) {
       phi: THREE.MathUtils.clamp(destination.phi, controles.minPolarAngle, controles.maxPolarAngle),
     };
 
-    return animer(etat, derniereDestination, mouvementsReduits ? 0 : duree, { onUpdate: appliquerEtat });
+    const vol = {};
+    volCourant = vol;
+    return animer(etat, derniereDestination, mouvementsReduits ? 0 : duree, { onUpdate: appliquerEtat })
+      .then(() => {
+        if (volCourant === vol) volCourant = null;
+      });
   }
 
   function stopperVol() {
     gsap?.killTweensOf(etat);
+    volCourant = null;
   }
 
 
