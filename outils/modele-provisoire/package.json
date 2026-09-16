@@ -1,0 +1,12 @@
+{
+  "name": "gva-modele-provisoire",
+  "private": true,
+  "description": "Génère le diorama 3D provisoire de l'aéroport (modeles/terminal.glb).",
+  "type": "module",
+  "scripts": {
+    "generer": "node generer-terminal.mjs"
+  },
+  "dependencies": {
+    "three": "0.186.0"
+  }
+}
