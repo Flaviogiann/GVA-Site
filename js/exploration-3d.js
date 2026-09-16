@@ -174,7 +174,7 @@ export async function creerScene3D(options) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = THREE.PCFShadowMap;   // filtré, adouci par shadow.radius
 
   const scene = new THREE.Scene();
 
@@ -196,6 +196,7 @@ export async function creerScene3D(options) {
   soleil.shadow.mapSize.setScalar(tactile ? 1024 : 2048);
   Object.assign(soleil.shadow.camera, { left: -15, right: 15, top: 15, bottom: -15, near: 1, far: 70 });
   soleil.shadow.bias = -0.0005;
+  soleil.shadow.radius = 3;
   scene.add(soleil);
 
   const contreJour = new THREE.DirectionalLight('#9dc2ff', 0.8);
@@ -346,18 +347,61 @@ export async function creerScene3D(options) {
     camera.position
       .setFromSphericalCoords(etat.rayon, etat.phi, etat.theta)
       .add(controles.target);
+    // Sans cela, un rendu fait hors de la boucle (redimensionnement)
+    // partirait d'une caméra mal orientée.
+    camera.lookAt(controles.target);
+    camera.updateMatrixWorld();
   }
 
+  /* Distance à laquelle le modèle remplit le cadre de départ.
+     On projette un échantillon de ses sommets depuis la direction de
+     départ et on cherche, par dichotomie, la distance où ils touchent
+     les bords utiles (le haut et le bas sont réservés aux outils).
+     Les coins de la boîte englobante seraient trop prudents : sur une
+     île ronde, ils tombent dans le vide. */
+  const echantillon = [];
+  const totalSommets = occultants.reduce((n, m) => n + m.geometry.attributes.position.count, 0);
+  const pas = Math.max(1, Math.floor(totalSommets / 2000));
+  for (const mesh of occultants) {
+    const positions = mesh.geometry.attributes.position;
+    for (let i = 0; i < positions.count; i += pas) {
+      echantillon.push(new THREE.Vector3().fromBufferAttribute(positions, i).applyMatrix4(mesh.matrixWorld));
+    }
+  }
+  const coins = echantillon.length ? echantillon : [boiteMonde.min.clone(), boiteMonde.max.clone()];
+  const cameraEssai = new THREE.PerspectiveCamera();
+  const pointEssai = new THREE.Vector3();
+
   function distanceIdeale() {
-    const vertical = THREE.MathUtils.degToRad(camera.fov);
-    const horizontal = 2 * Math.atan(Math.tan(vertical / 2) * camera.aspect);
-    const angle = Math.min(vertical, horizontal);
-    return (RAYON * 0.8) / Math.sin(angle / 2);
+    const cible = new THREE.Vector3(centre.x, centre.y, centre.z);
+    const direction = new THREE.Vector3().setFromSphericalCoords(1, PLONGEE_DEPART, AZIMUT_DEPART);
+    cameraEssai.fov = camera.fov;
+    cameraEssai.aspect = camera.aspect;
+    cameraEssai.updateProjectionMatrix();
+
+    const tient = (distance) => {
+      cameraEssai.position.copy(direction).multiplyScalar(distance).add(cible);
+      cameraEssai.lookAt(cible);
+      cameraEssai.updateMatrixWorld();
+      return coins.every((c) => {
+        pointEssai.copy(c).project(cameraEssai);
+        return Math.abs(pointEssai.x) <= 0.9 && Math.abs(pointEssai.y) <= 0.78 && pointEssai.z < 1;
+      });
+    };
+
+    let proche = RAYON * 0.5;
+    let loin = RAYON * 8;
+    for (let i = 0; i < 18; i++) {
+      const milieu = (proche + loin) / 2;
+      if (tient(milieu)) loin = milieu;
+      else proche = milieu;
+    }
+    return loin;
   }
 
   function vueDepart() {
     return {
-      cx: centre.x, cy: centre.y - RAYON * 0.04, cz: centre.z,
+      cx: centre.x, cy: centre.y, cz: centre.z,
       rayon: distanceIdeale(), theta: AZIMUT_DEPART, phi: PLONGEE_DEPART,
     };
   }
@@ -540,26 +584,30 @@ export async function creerScene3D(options) {
   const observateurTaille = new ResizeObserver(redimensionner);
   observateurTaille.observe(toile);
 
-  const horloge = new THREE.Clock();
+  /* Timer suit le temps entre deux images ; connect() le remet à zéro
+     quand l'onglet redevient visible, pour éviter un saut. */
+  const minuteur = new THREE.Timer();
+  minuteur.connect(document);
 
   function rendre() {
     renderer.render(scene, camera);
     placerPastilles();
   }
 
-  function boucle() {
-    const dt = Math.min(horloge.getDelta(), 0.1);
+  function boucle(temps) {
+    minuteur.update(temps);
+    const dt = Math.min(minuteur.getDelta(), 0.1);
     melangeur.update(dt);
     controles.update(dt);
     rendre();
-    testerOccultation(performance.now());
+    testerOccultation(temps);
   }
 
   function definirVisible(oui) {
     if (oui === visible) return;
     visible = oui;
     if (oui) {
-      horloge.getDelta();
+      minuteur.reset();
       renderer.setAnimationLoop(boucle);
     } else {
       renderer.setAnimationLoop(null);
@@ -668,6 +716,7 @@ export async function creerScene3D(options) {
 
     detruire() {
       renderer.setAnimationLoop(null);
+      minuteur.dispose();
       observateurTaille.disconnect();
       controles.dispose();
       scene.traverse((o) => {

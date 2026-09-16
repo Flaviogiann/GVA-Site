@@ -303,6 +303,30 @@ function demarrerScrub() {
 
   ScrollTrigger.addEventListener('refresh', dimensionnerCanvas);
   window.addEventListener('resize', dimensionnerCanvas);
+
+  viserAncre();
+}
+
+/* L'épinglage ajoute 2000 px à la page après son chargement. Une
+   adresse avec ancre (#services…) a donc été visée trop haut par le
+   navigateur : on la vise à nouveau, sauf si le visiteur a déjà
+   défilé de lui-même. */
+let aDefile = false;
+['wheel', 'touchmove', 'keydown'].forEach(function (type) {
+  window.addEventListener(type, function () { aDefile = true; }, { once: true, passive: true });
+});
+
+function viserAncre() {
+  if (!location.hash || aDefile) return;
+  let cible = null;
+  try {
+    cible = document.querySelector(location.hash);
+  } catch (e) {
+    return;   // ancre qui n'est pas un sélecteur valide
+  }
+  if (!cible) return;
+  ScrollTrigger.refresh();
+  cible.scrollIntoView({ behavior: 'instant', block: 'start' });
 }
 
 

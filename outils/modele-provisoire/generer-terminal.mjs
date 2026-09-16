@@ -405,11 +405,12 @@ for (const x of [-4.6, -3.2, -1.8]) A.add(boite(0.5, 0.36, 0.05, C.vitreFonce, x
 // auvent de la dépose-minute et ses colonnes
 A.add(boite(5.2, 0.07, 0.95, C.toit, -2.2, 0.82, 3.82));
 for (let x = -4.5; x <= 0.2; x += 1.55) A.add(cylindre(0.04, 0.04, 0.82, C.poteau, x, 0, 4.2, 6));
-// salons, à l'étage, sur l'aile est
+// salons, sur deux étages, au-dessus de l'aile est
 A.add(
-  boite(2.1, 0.55, 1.2, C.facade, 1.9, 1.17, 2.5),
-  boite(2.14, 0.28, 1.24, C.vitre, 1.9, 1.3, 2.5),
-  boite(2.35, 0.07, 1.42, C.toit, 1.9, 1.72, 2.5)
+  boite(2.1, 0.95, 1.2, C.facade, 2.0, 1.17, 2.5),
+  boite(2.14, 0.26, 1.24, C.vitre, 2.0, 1.3, 2.5),
+  boite(2.14, 0.26, 1.24, C.vitre, 2.0, 1.72, 2.5),
+  boite(2.35, 0.07, 1.42, C.toit, 2.0, 2.12, 2.5)
 );
 interdire(-6.7, 3.9, 1.5, 4.7);
 
@@ -648,11 +649,13 @@ const busNavette = meshAnime('bus-navette', bus());
 aeroport.add(avionDecollage, voitureAutoroute, busNavette);
 
 // Points d'intérêt : nœuds vides dont seule la position compte.
+/* Les points sont étalés en largeur, en profondeur et en hauteur pour
+   ne pas se chevaucher depuis le cadrage de départ. */
 const PASTILLES = {
-  1: [-4.4, 1.55, 3.1],   // enregistrement, hall côté ville
-  2: [-2.0, 1.6, 2.5],    // contrôle de sécurité, cœur du terminal
-  3: [0.1, 1.55, 1.85],   // duty free, côté pistes
-  4: [1.9, 2.2, 2.5],     // salons, à l'étage
+  1: [-4.3, 1.25, 3.75],  // enregistrement, devant le hall côté ville
+  2: [-2.1, 1.7, 2.6],    // contrôle de sécurité, cœur du terminal
+  3: [-0.3, 1.35, 1.75],  // duty free, côté pistes
+  4: [2.1, 2.75, 2.6],    // salons, sur l'aile est
   5: [1.8, 1.3, -1.9],    // bout de la jetée
   6: [P1.x, 2.05, P1.z],  // parking P1
 };
