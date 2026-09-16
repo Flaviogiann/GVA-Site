@@ -1,0 +1,4 @@
+node_modules/
+outils/modele-provisoire/package-lock.json
+.DS_Store
+Thumbs.db

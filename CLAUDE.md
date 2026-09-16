@@ -3,13 +3,14 @@
 Projet semestriel de l'option WEB (CPNV, médiamatique 3e année). Refonte de
 démonstration du site public de Genève Aéroport, d'après la maquette
 `../GVA - Maquette site web.dc.html`. Le cahier des charges est dans
-`../Cahier_des_charges_GVA.docx`.
+`../Cahier_des_charges_GVA_v2.docx`.
 
 ## Contraintes du projet
 
 - HTML5, CSS3 et JavaScript ES6 **sans framework** (ni React, ni Vue, ni Bootstrap).
-- GSAP 3.13 + ScrollTrigger, chargés depuis `js/vendor/` (pas de CDN).
+- GSAP 3.13 + ScrollTrigger et three.js 0.186, chargés depuis `js/vendor/` (pas de CDN).
 - Aucun outil de compilation : le site doit tourner derrière un simple serveur statique.
+  Les bibliothèques sont minifiées une fois pour toutes et versionnées telles quelles.
 - Page unique. Pas de PWA : abandonnée en version N°2 du cahier des charges (09.09.2026).
 - Textes de l'interface et commentaires du code **en français**.
 
@@ -26,6 +27,18 @@ Conséquences pratiques :
   dès lors qu'elles sont gérées par Chrome, Edge et Safari.
 - Un repli reste obligatoire pour ce qui touche à l'accessibilité
   (`prefers-reduced-motion`) et pour le cas où une ressource ne charge pas.
+- `interestfor`, `popover="hint"` et le positionnement par ancre ne sont pas
+  utilisés : Safari ne les gère pas tous.
+
+## Organisation du JavaScript
+
+- `js/main.js` : script classique (hero, menu). Il doit rester chargé avant les modules.
+- `js/exploration.js` : module ES, interface de la section 2.
+- `js/exploration-3d.js` : module ES importé dynamiquement à l'approche de la section.
+  Il utilise `window.gsap`.
+- La carte d'import (`index.html`, fin du `<body>`) fait correspondre `three` et
+  `three/addons/` aux fichiers de `js/vendor/three/`.
+- Les textes des points d'intérêt sont dans `js/donnees/points-interet.js`.
 
 ## Conventions
 
@@ -38,12 +51,34 @@ Conséquences pratiques :
   (`--duree-palier: 240ms`, `--duree-cta: 320ms`, etc.).
 - Les fichiers CSS et JS sont découpés en sections numérotées et commentées.
 
+## Modèle 3D
+
+- Le fichier chargé est `modeles/terminal.glb` (attribut `data-modele`).
+- Conventions du fichier : objets vides `pastille-1` à `pastille-6`, `vue-<n>`
+  facultatifs, toutes les animations jouées en boucle. Détails dans
+  `modeles/LISEZMOI.md`.
+- Le modèle actuel est **provisoire** : `outils/modele-provisoire/generer-terminal.mjs`.
+- `?modele=…` dans l'adresse charge un autre fichier ; `?debug` expose
+  `window.gva3d` (caméra, contrôles, scène).
+
 ## Encoder les frames du hero
 
-Le script est `../../../../AppData/Local/Temp/…/encode-frames.sh` ; sa version de
-référence est recopiée dans `outils/encode-frames.sh`.
+Le script est `outils/encode-frames.sh`.
 
 **Piège important** : il faut le muxer `-f avif` de ffmpeg, avec **un appel par
 image**. Avec `-f image2` et un motif `%03d.avif`, ffmpeg encode la suite comme
 une vidéo : les frames sont inter-codées, les fichiers paraissent légers mais le
 navigateur ne peut pas les décoder isolément (`naturalWidth` vaut 0).
+
+## Pièges déjà rencontrés
+
+- **three.js 0.186** : `THREE.Clock` est déprécié (utiliser `THREE.Timer`),
+  `PCFSoftShadowMap` n'existe plus (`PCFShadowMap` + `shadow.radius`).
+- Après avoir changé le cadre d'une caméra d'ombre, appeler
+  `shadow.camera.updateProjectionMatrix()`.
+- Une caméra déplacée hors de la boucle de rendu doit être réorientée
+  (`lookAt`) avant un rendu : `OrbitControls.update()` ne passe qu'à l'image suivante.
+- En colonne flex, `flex: 1` annule la hauteur fixée : `.exploration__vue` passe
+  en `flex: none` sous 1024 px.
+- L'épinglage du hero rallonge la page après chargement : une ancre dans
+  l'adresse est visée à nouveau par `viserAncre()` dans `main.js`.

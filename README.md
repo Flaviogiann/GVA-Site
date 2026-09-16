@@ -12,13 +12,21 @@ charges `../Cahier_des_charges_GVA.docx`.
 ## Lancer le projet
 
 Le site est statique et n'a besoin d'aucune compilation. Il lui faut simplement
-un serveur, parce que le canvas lit les frames en HTTP :
+un serveur, parce que le canvas et la 3D lisent leurs fichiers en HTTP :
 
 ```bash
 npx serve GVA_SITE -l 4173
 ```
 
-Puis ouvrir `http://localhost:4173`.
+Puis ouvrir `http://localhost:4173`. Le fichier `serve.json` désactive le cache
+du navigateur pendant le développement.
+
+Deux paramètres d'adresse aident à travailler sur la 3D :
+
+| Paramètre | Effet |
+| --- | --- |
+| `?modele=modeles/autre.glb` | charge un autre modèle sans toucher au HTML |
+| `?debug` | expose la scène dans la console : `window.gva3d` |
 
 ## État d'avancement
 
@@ -26,7 +34,7 @@ Puis ouvrir `http://localhost:4173`.
 | --- | --- |
 | 0 · Design system | jetons CSS et boutons en place |
 | 1 · Hero vidéo scrubbée | **fait** |
-| 2 · Exploration du terminal | à faire — jalon J4 |
+| 2 · Exploration du terminal | **fait**, avec un modèle 3D provisoire |
 | 3 · Vos vols en temps réel | à faire — jalon J5 |
 | 4 · Accès & Parking | à faire — jalon J5 |
 | 5 · Boutiques & restaurants | à faire — jalon J5 |
@@ -37,15 +45,26 @@ Puis ouvrir `http://localhost:4173`.
 ```
 GVA_SITE/
 ├── index.html
-├── css/style.css          jetons de design, en-tête, hero, responsive
+├── css/style.css              jetons de design, en-tête, hero, 3D, responsive
 ├── js/
-│   ├── main.js            le scrub, le chargement des frames, le menu
-│   └── vendor/            GSAP 3.13 et ScrollTrigger, en local
+│   ├── main.js                le scrub, le chargement des frames, le menu
+│   ├── exploration.js         section 2 : légende, pastilles, panneau
+│   ├── exploration-3d.js      section 2 : scène three.js, chargée à la demande
+│   ├── donnees/
+│   │   └── points-interet.js  textes des six points d'intérêt
+│   └── vendor/
+│       ├── gsap.min.js, ScrollTrigger.min.js
+│       └── three/             three.js 0.186, minifié, et ses modules
 ├── images/hero/
-│   ├── 1920/000…119.avif  la séquence, version ordinateur
-│   ├── 1080/000…119.avif  la séquence, version téléphone
-│   └── poster*.avif|webp  l'affiche fixe, en deux tailles
-└── outils/encode-frames.sh
+│   ├── 1920/000…119.avif      la séquence, version ordinateur
+│   ├── 1080/000…119.avif      la séquence, version téléphone
+│   └── poster*.avif|webp      l'affiche fixe, en deux tailles
+├── modeles/
+│   ├── terminal.glb           le modèle 3D (provisoire)
+│   └── LISEZMOI.md            comment intégrer le vrai modèle
+└── outils/
+    ├── encode-frames.sh       encodage des frames du hero
+    └── modele-provisoire/     génération du modèle 3D provisoire
 ```
 
 ## Le hero scrubbé
@@ -150,12 +169,94 @@ normale avec une image fixe :
   avancent le scrub et rendent les appels à l'action atteignables.
 - Un lien d'évitement mène directement au contenu.
 
+## L'exploration 3D
+
+Une maquette 3D de l'aéroport, posée sur une île flottante, que l'on fait
+pivoter à la souris, au doigt ou au clavier. Six pastilles numérotées ouvrent un
+panneau d'information. L'interaction s'inspire de la carte de
+[TheWood & fils](https://www.thewoodetfils.com/a-propos#notre-monde) ; la mise
+en page et le design suivent les frames 06, 07 et 07-M de la maquette.
+
+### Ce qui se passe
+
+| Action | Effet |
+| --- | --- |
+| Section visible à plus de 30 % | la caméra entre en orbite lente |
+| Glisser, molette, pincer | pivoter, zoomer ; l'orbite s'arrête |
+| Survol d'une pastille | elle grossit et affiche son nom |
+| Clic sur une pastille ou une ligne de la légende | la caméra vole vers le point, le panneau s'ouvre |
+| Clic sur une autre pastille, panneau ouvert | le contenu change en fondu |
+| Croix, Échap, ou « Voir sur le plan » | le panneau se ferme |
+| Bouton œil | affiche tous les noms, placés pour ne pas se chevaucher |
+| Bouton « i » | réaffiche l'aide gestuelle |
+| Boutons ↺ ↻ − + | pivotent de 45° et zooment |
+| « Réinitialiser la vue » | retour au cadrage de départ, orbite relancée |
+| Clavier sur la vue | flèches pour pivoter et incliner, + et − pour zoomer, 0 pour revenir |
+
+Sur téléphone, le panneau devient une feuille qui monte du bas sur 70 % de
+l'écran. On la ferme en la glissant vers le bas, en touchant à côté ou avec la
+croix. La vue 3D remonte sous l'en-tête pour rester visible au-dessus de la
+feuille, et la page revient à sa place à la fermeture.
+
+### Comment c'est construit
+
+- **Chargement à la demande.** three.js pèse environ 800 Ko minifié. Le module
+  `exploration-3d.js` n'est importé que lorsque la section approche de l'écran,
+  il ne ralentit donc pas l'arrivée sur le hero.
+- **Un modèle interchangeable.** Le site charge un fichier `.glb`, le recentre et
+  le ramène toujours à la même taille. Les pastilles se posent sur les objets
+  vides `pastille-1` à `pastille-6` du modèle. Tout est expliqué dans
+  `modeles/LISEZMOI.md`.
+- **Des pastilles en HTML.** Elles sont projetées depuis la 3D à chaque image.
+  Une pastille cachée derrière un bâtiment est atténuée.
+- **La caméra vole en coordonnées sphériques.** GSAP anime la cible, la distance
+  et les deux angles, pour que la caméra tourne autour du modèle au lieu de le
+  traverser.
+- **Le point regardé reste visible.** Quand le panneau couvre une partie de la
+  vue, l'image est décalée pour centrer le point dans la partie libre.
+- **Le panneau est un `<dialog>`.** Non modal sur ordinateur, pour changer de
+  point sans le fermer. Modal sur téléphone, où le reste de la page devient
+  inerte.
+- **La scène ne tourne que visible.** La boucle de rendu s'arrête quand la
+  section sort de l'écran ou que l'onglet passe en arrière-plan.
+
+### Le modèle provisoire
+
+Faute de modèle définitif, `modeles/terminal.glb` est généré par script :
+piste, terminal, jetée, tour de contrôle, hangar, parkings, gare, lac, forêts,
+champs, nuages, et un avion qui décolle en boucle. 15 800 triangles, 361 Ko.
+
+```bash
+cd outils/modele-provisoire
+npm install
+node generer-terminal.mjs
+```
+
+### Replis
+
+- **Mouvements réduits** : pas d'orbite, pas d'animation du décor, déplacements
+  de caméra instantanés.
+- **Modèle absent ou WebGL indisponible** : un message remplace la vue, et la
+  légende ouvre toujours les panneaux.
+
+### Accessibilité
+
+- La légende est la porte d'entrée au clavier et aux lecteurs d'écran : ses
+  boutons indiquent l'état du panneau (`aria-expanded`). Les pastilles la
+  doublent pour la souris et le doigt, et sont masquées aux lecteurs d'écran.
+- À l'ouverture, le focus va au titre du panneau ; à la fermeture, il revient au
+  bouton qui l'a ouvert.
+- La vue 3D se pilote au clavier, et ses raccourcis sont décrits pour les
+  lecteurs d'écran.
+- Les boutons à icône ont un nom accessible, affiché aussi en bulle au survol.
+
 ## À faire
 
+- [ ] Remplacer le modèle provisoire par le modèle Blender (voir `modeles/LISEZMOI.md`).
+- [ ] Ajouter les photos des six points dans `js/donnees/points-interet.js`.
 - [ ] Trancher la question du filigrane « Google Earth » (voir Crédits).
 - [ ] Auto-héberger la police Inter (aujourd'hui chargée depuis Google Fonts,
       alors que le cahier des charges la demande auto-hébergée).
-- [ ] Remplacer la section 2 provisoire par l'exploration du terminal.
 - [ ] Mesurer avec Lighthouse et consigner le résultat.
 - [ ] Tester sur iPhone et sur Android réels.
 - [ ] Écrire `CREDITS.md` avec les licences des images.
@@ -180,6 +281,18 @@ Trois options, à décider avec l'enseignant :
 2. Recomposer le mouvement avec des images sous une autre licence
    (photographies libres, ou rendu 3D maison).
 3. Demander à Genève Aéroport des visuels utilisables.
+
+Bibliothèques, toutes chargées depuis `js/vendor/` :
+
+| Bibliothèque | Licence |
+| --- | --- |
+| GSAP 3.13 et ScrollTrigger | licence standard GreenSock, gratuite |
+| three.js 0.186 | MIT, texte dans `js/vendor/three/LICENSE` |
+| Décodeur Draco (Google) | Apache 2.0 |
+| Décodeur Meshopt | MIT |
+
+Le modèle 3D provisoire est produit par script pour ce projet : aucune
+ressource tierce.
 
 ---
 
