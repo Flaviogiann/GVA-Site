@@ -4,7 +4,7 @@
     {
       "name": "gva-site",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["-y", "serve", "GVA_SITE", "-l", "4173"],
+      "runtimeArgs": ["-y", "serve", ".", "-l", "4173"],
       "port": 4173
     }
   ]

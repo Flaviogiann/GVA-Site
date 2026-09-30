@@ -1,4 +1,15 @@
+# Dépendances installées par npm
 node_modules/
 outils/modele-provisoire/package-lock.json
-.DS_Store
+npm-debug.log*
+
+# Fichiers créés par Windows, macOS et OneDrive
 Thumbs.db
+desktop.ini
+.DS_Store
+
+# Fichiers temporaires de Word et PowerPoint
+~$*
+
+# Réglages locaux de Claude Code
+.claude/settings.local.json

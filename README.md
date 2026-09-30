@@ -6,8 +6,13 @@ cadre du projet semestriel de l'option WEB (CPNV, médiamatique 3e année).
 > Projet d'école. Ce site n'est ni commandé ni validé par Genève Aéroport SA et
 > n'utilise aucun élément de son identité visuelle officielle.
 
-La maquette de référence est `../GVA - Maquette site web.dc.html`, le cahier des
-charges `../Cahier_des_charges_GVA.docx`.
+La maquette de référence, le cahier des charges et la présentation sont dans
+`dossier-projet/`.
+
+> **Historique du dépôt.** Le projet a d'abord été développé hors de Git. Les
+> commits antérieurs au 30 septembre 2026 ont été reconstitués après coup à
+> partir des journaux de travail : leur contenu et leurs dates correspondent aux
+> modifications réelles, mais ils n'ont pas été enregistrés au fil de l'eau.
 
 ## Lancer le projet
 
@@ -15,7 +20,7 @@ Le site est statique et n'a besoin d'aucune compilation. Il lui faut simplement
 un serveur, parce que le canvas et la 3D lisent leurs fichiers en HTTP :
 
 ```bash
-npx serve GVA_SITE -l 4173
+npx serve . -l 4173
 ```
 
 Puis ouvrir `http://localhost:4173`. Le fichier `serve.json` désactive le cache
@@ -43,7 +48,7 @@ Deux paramètres d'adresse aident à travailler sur la 3D :
 ## Arborescence
 
 ```
-GVA_SITE/
+GVA-Site/
 ├── index.html
 ├── css/style.css              jetons de design, en-tête, hero, 3D, responsive
 ├── js/
@@ -62,9 +67,10 @@ GVA_SITE/
 ├── modeles/
 │   ├── terminal.glb           le modèle 3D (provisoire)
 │   └── LISEZMOI.md            comment intégrer le vrai modèle
-└── outils/
-    ├── encode-frames.sh       encodage des frames du hero
-    └── modele-provisoire/     génération du modèle 3D provisoire
+├── outils/
+│   ├── encode-frames.sh       encodage des frames du hero
+│   └── modele-provisoire/     génération du modèle 3D provisoire
+└── dossier-projet/            cahier des charges, maquette, présentation
 ```
 
 ## Le hero scrubbé
@@ -263,8 +269,9 @@ node generer-terminal.mjs
 
 ## Crédits et licences
 
-Les rushes du hero sont un export **Google Earth Studio**. Les fournisseurs de
-données sont listés dans `../gva_hero/gva_hero/ImagerySources.txt` : Vexcel
+Les rushes du hero sont un export **Google Earth Studio**. Ils ne sont pas dans
+le dépôt, seules les images encodées le sont. Les fournisseurs de données sont
+listés dans le fichier `ImagerySources.txt` livré avec l'export : Vexcel
 Imaging US Inc., Airbus, Landsat / Copernicus, ©swisstopo, Data SIO, NOAA,
 U.S. Navy, NGA, GEBCO.
 

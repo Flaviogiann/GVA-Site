@@ -2,8 +2,8 @@
 
 Projet semestriel de l'option WEB (CPNV, médiamatique 3e année). Refonte de
 démonstration du site public de Genève Aéroport, d'après la maquette
-`../GVA - Maquette site web.dc.html`. Le cahier des charges est dans
-`../Cahier_des_charges_GVA_v2.docx`.
+`dossier-projet/GVA - Maquette site web.dc.html`. Le cahier des charges est dans
+`dossier-projet/Cahier_des_charges_GVA_v2.docx`.
 
 ## Contraintes du projet
 
