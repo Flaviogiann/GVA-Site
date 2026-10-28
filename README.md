@@ -26,12 +26,13 @@ npx serve . -l 4173
 Puis ouvrir `http://localhost:4173`. Le fichier `serve.json` désactive le cache
 du navigateur pendant le développement.
 
-Deux paramètres d'adresse aident à travailler sur la 3D :
+Trois paramètres d'adresse aident à travailler sur la 3D et sur les vols :
 
 | Paramètre | Effet |
 | --- | --- |
 | `?modele=modeles/autre.glb` | charge un autre modèle sans toucher au HTML |
 | `?debug` | expose la scène dans la console : `window.gva3d` |
+| `?heure=05:50` | règle l'heure de Genève du tableau des vols (elle continue de s'écouler) ; à 05:50, le tableau montre la maquette |
 
 ## État d'avancement
 
@@ -40,9 +41,9 @@ Deux paramètres d'adresse aident à travailler sur la 3D :
 | 0 · Design system | jetons CSS et boutons en place |
 | 1 · Hero vidéo scrubbée | **fait** |
 | 2 · Exploration du terminal | **fait**, avec un modèle 3D provisoire |
-| 3 · Vos vols en temps réel | à faire — jalon J5 |
-| 4 · Accès & Parking | à faire — jalon J5 |
-| 5 · Boutiques & restaurants | à faire — jalon J5 |
+| 3 · Vos vols en temps réel | **fait**, avec des vols simulés (pas d'API) |
+| 4 · Accès & Parking | premier jet — contenu à aligner sur la maquette |
+| 5 · Boutiques & restaurants | premier jet — carrousel de la maquette à faire |
 | 6 · Pied de page | à faire — jalon J5 |
 
 ## Arborescence
@@ -55,8 +56,10 @@ GVA-Site/
 │   ├── main.js                le scrub, le chargement des frames, le menu
 │   ├── exploration.js         section 2 : légende, pastilles, panneau
 │   ├── exploration-3d.js      section 2 : scène three.js, chargée à la demande
+│   ├── vols.js                section 3 : onglets, recherche, mise à jour toutes les 30 s
 │   ├── donnees/
-│   │   └── points-interet.js  textes des six points d'intérêt
+│   │   ├── points-interet.js  textes des six points d'intérêt
+│   │   └── vols.js            programme des vols de la journée (démonstration)
 │   └── vendor/
 │       ├── gsap.min.js, ScrollTrigger.min.js
 │       └── three/             three.js 0.186, minifié, et ses modules

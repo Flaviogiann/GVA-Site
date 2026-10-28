@@ -257,6 +257,78 @@
   </section>
 
   <!-- ============================================================
+       Vos vols en temps réel
+       Le tableau est construit par js/vols.js depuis
+       js/donnees/vols.js : tableau sur ordinateur, cartes empilées
+       sur tablette et téléphone. Les vols sont simulés.
+       ============================================================ -->
+  <section class="vols" id="vols" aria-labelledby="vols-titre">
+    <div class="vols__inner">
+
+      <header class="vols__entete">
+        <div>
+          <p class="vols__surtitre">Temps réel</p>
+          <h2 class="vols__titre" id="vols-titre">Vos vols en temps réel</h2>
+        </div>
+        <p class="vols__maj">mise à jour auto · 30 s</p>
+      </header>
+
+      <div class="vols__outils">
+        <div class="onglets" role="tablist" aria-label="Type de vols">
+          <span class="onglets__indicateur" aria-hidden="true"></span>
+          <button class="onglet" type="button" role="tab" id="onglet-departs" data-type="departs"
+                  aria-selected="true" aria-controls="vols-corps">Départs</button>
+          <button class="onglet" type="button" role="tab" id="onglet-arrivees" data-type="arrivees"
+                  aria-selected="false" aria-controls="vols-corps" tabindex="-1">Arrivées</button>
+        </div>
+
+        <form class="recherche" role="search">
+          <label class="visuellement-masque" for="vols-recherche">Rechercher un vol, une ville ou une compagnie</label>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+          <input class="recherche__champ" id="vols-recherche" type="search" name="q"
+                 placeholder="Vol, ville ou compagnie" autocomplete="off" autocapitalize="off"
+                 spellcheck="false" enterkeyhint="search" aria-describedby="vols-vide">
+        </form>
+      </div>
+
+      <div class="vols__corps" id="vols-corps" role="tabpanel" aria-labelledby="onglet-departs">
+        <div class="vols__tableau">
+          <table class="tableau-vols">
+            <caption class="visuellement-masque">Départs, heure de Genève</caption>
+            <colgroup>
+              <col class="col-heure"><col class="col-lieu"><col class="col-vol">
+              <col class="col-porte"><col class="col-terminal"><col class="col-statut">
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">Heure</th>
+                <th scope="col" id="vols-colonne-lieu">Destination</th>
+                <th scope="col">Vol</th>
+                <th scope="col">Porte</th>
+                <th scope="col">Terminal</th>
+                <th scope="col">Statut</th>
+              </tr>
+            </thead>
+            <!-- Rempli par vols.js -->
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <ul class="vols__cartes" aria-label="Départs"></ul>
+
+        <p class="vols__vide" id="vols-vide" hidden></p>
+        <noscript><p class="vols__vide">Le tableau des vols a besoin de JavaScript pour s'afficher.</p></noscript>
+      </div>
+
+      <div class="vols__suite" hidden>
+        <button class="bouton bouton--bordure" type="button">Tous les départs</button>
+      </div>
+
+      <p class="visuellement-masque" id="vols-etat" role="status"></p>
+    </div>
+  </section>
+
+  <!-- ============================================================
        Accès & Parking
        Contenu statique. Durées, tarifs et distances sont inventés
        (démonstration).
@@ -599,5 +671,6 @@
   }
 </script>
 <script type="module" src="js/exploration.js"></script>
+<script type="module" src="js/vols.js"></script>
 </body>
 </html>

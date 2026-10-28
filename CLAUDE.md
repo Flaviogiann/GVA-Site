@@ -38,6 +38,9 @@ Conséquences pratiques :
   Il utilise `window.gsap`.
 - La carte d'import (`index.html`, fin du `<body>`) fait correspondre `three` et
   `three/addons/` aux fichiers de `js/vendor/three/`.
+- `js/vols.js` : module ES, tableau des vols (section 3). Les vols sont simulés :
+  le programme est dans `js/donnees/vols.js`, le statut vient de l'heure de Genève
+  et `annoncerUnRetard()` joue le rôle du serveur. `?heure=HH:MM` règle l'horloge.
 - Les textes des points d'intérêt sont dans `js/donnees/points-interet.js`.
 
 ## Conventions
