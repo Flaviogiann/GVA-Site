@@ -9,8 +9,11 @@
    4. En-tête et navigation
    5. Hero scrubbé
    6. Exploration 3D (avec son propre responsive)
-   7. Responsive
-   8. Mouvements réduits
+   7. Accès et parking (avec son propre responsive)
+   8. Boutiques et restaurants (avec son propre responsive)
+   9. Infos pratiques (avec son propre responsive)
+   10. Responsive
+   11. Mouvements réduits
    ========================================================= */
 
 
@@ -1369,7 +1372,548 @@ html:has(.panneau:modal) { overflow: hidden; }
 
 
 /* ---------------------------------------------------------
-   7. Responsive — bascule sur la maquette mobile 390 px
+   7. Accès et parking
+
+   .mode     un moyen d'accès (icône, durée, texte)
+   .place    un parking ; .place--conseille est mis en avant
+   --------------------------------------------------------- */
+
+.acces {
+  scroll-margin-top: var(--hauteur-entete);
+  padding: 112px var(--marge);
+  background: var(--blanc-casse);
+}
+
+.acces__inner {
+  max-width: 1248px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.acces__intro {
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.acces__surtitre {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.acces__titre {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+}
+.acces__texte { color: var(--gris-texte); }
+
+/* --- Moyens d'accès --- */
+
+.acces__modes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.mode {
+  padding: 28px 24px;
+  border: 1px solid rgba(11, 31, 58, .08);
+  border-radius: var(--rayon-large);
+  background: var(--surface);
+  transition: transform var(--duree-cta) var(--sortie),
+              box-shadow var(--duree-cta) var(--sortie);
+}
+.mode:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(11, 31, 58, .10);
+}
+.mode svg {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 20px;
+  color: var(--accent);
+}
+.mode__nom {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gris-texte);
+}
+.mode__duree {
+  margin: 4px 0 10px;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+.mode__duree span {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--gris-texte);
+}
+.mode__texte {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--gris-texte);
+}
+
+/* --- Parkings : bandeau bleu nuit --- */
+
+.parking {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 24px 56px;
+  align-items: start;
+  padding: 48px;
+  border-radius: var(--rayon-large);
+  background: linear-gradient(160deg, #0B1F3A 0%, #12305A 100%);
+  color: #fff;
+}
+.parking__intro { display: flex; flex-direction: column; gap: 12px; }
+.parking__titre {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+.parking__texte { font-size: 15px; opacity: .8; }
+.parking__liste {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.parking > .bouton {
+  grid-column: 1;
+  background: var(--surface);
+  color: var(--bleu-nuit);
+  align-self: start;
+}
+.parking > .bouton:hover { background: #E9ECF2; box-shadow: none; }
+.parking > .bouton:active { background: var(--accent); color: #fff; }
+
+.place {
+  position: relative;
+  padding: 24px 20px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: var(--rayon);
+  background: rgba(255, 255, 255, .05);
+}
+.place--conseille {
+  border-color: #fff;
+  background: rgba(255, 255, 255, .12);
+}
+.place__badge {
+  position: absolute;
+  top: -11px;
+  left: 20px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 22px;
+}
+.place__nom { font-size: 15px; font-weight: 500; opacity: .8; }
+.place__prix {
+  margin: 6px 0 16px;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+.place__prix span {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  opacity: .7;
+}
+.place__infos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, .15);
+}
+.place__infos dt { font-size: 12px; opacity: .65; }
+.place__infos dd { font-size: 15px; font-weight: 500; }
+
+/* Les trois parkings ont besoin de ~190 px chacun : on empile le bandeau
+   dès que la colonne de droite passe sous cette largeur. */
+@media (max-width: 1279px) {
+  .parking { grid-template-columns: 1fr; padding: 40px 32px; }
+  .parking__liste { grid-column: 1; grid-row: auto; }
+  .parking > .bouton { grid-column: 1; justify-self: start; }
+}
+
+@media (max-width: 1023px) {
+  .acces { padding: 80px var(--marge); }
+  .acces__modes { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .acces { padding: 64px var(--marge); }
+  .acces__inner { gap: 40px; }
+  .acces__modes { grid-template-columns: 1fr; gap: 12px; }
+  .mode { padding: 22px 20px; }
+  .mode:hover { transform: none; box-shadow: none; }
+  .parking { padding: 32px 20px; }
+  .parking__liste { grid-template-columns: 1fr; gap: 20px; }
+  .parking > .bouton { width: 100%; justify-self: stretch; }
+}
+
+
+/* ---------------------------------------------------------
+   8. Boutiques et restaurants
+
+   .filtre    boutons radio ; le CSS masque les cartes (:has)
+   .magasin     une carte ; data-type = boutique | restaurant
+   --------------------------------------------------------- */
+
+.boutiques {
+  scroll-margin-top: var(--hauteur-entete);
+  padding: 112px var(--marge);
+  background: var(--surface);
+}
+
+.boutiques__inner {
+  max-width: 1248px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.boutiques__intro {
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.boutiques__surtitre {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.boutiques__titre {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+}
+.boutiques__texte { color: var(--gris-texte); }
+
+/* --- Filtre --- */
+
+.filtre {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.filtre__choix { position: relative; cursor: pointer; }
+.filtre__choix input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.filtre__choix span {
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 22px;
+  border: 1px solid rgba(11, 31, 58, .2);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 160ms var(--sortie),
+              border-color 160ms var(--sortie),
+              color 160ms var(--sortie);
+}
+.filtre__choix:hover span { border-color: var(--bleu-nuit); }
+.filtre__choix input:checked + span {
+  background: var(--bleu-nuit);
+  border-color: var(--bleu-nuit);
+  color: #fff;
+}
+.filtre__choix input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.boutiques:has(input[value="boutique"]:checked) .magasin[data-type="restaurant"],
+.boutiques:has(input[value="restaurant"]:checked) .magasin[data-type="boutique"] {
+  display: none;
+}
+
+/* --- Cartes --- */
+
+.boutiques__liste {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.magasin {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 24px;
+  border: 1px solid rgba(11, 31, 58, .08);
+  border-radius: var(--rayon-large);
+  background: var(--blanc-casse);
+  transition: transform var(--duree-cta) var(--sortie),
+              box-shadow var(--duree-cta) var(--sortie);
+}
+.magasin:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(11, 31, 58, .10);
+}
+.magasin__type {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.magasin__nom {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+.magasin__texte {
+  flex: 1;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--gris-texte);
+}
+.magasin__infos {
+  display: flex;
+  gap: 32px;
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(11, 31, 58, .1);
+}
+.magasin__infos dt {
+  font-size: 12px;
+  color: var(--gris-texte);
+}
+.magasin__infos dd {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+@media (max-width: 1023px) {
+  .boutiques { padding: 80px var(--marge); }
+  .boutiques__liste { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .boutiques { padding: 64px var(--marge); }
+  .boutiques__inner { gap: 32px; }
+  .boutiques__liste { grid-template-columns: 1fr; gap: 12px; }
+  .magasin { padding: 22px 20px; }
+  .magasin:hover { transform: none; box-shadow: none; }
+}
+
+
+/* ---------------------------------------------------------
+   9. Infos pratiques
+
+   .infos__essentiel   quatre cartes « chiffre clé »
+   .infos__corps       questions à gauche, contacts à droite
+   .question           un <details> ; name="infos" les rend exclusifs
+   --------------------------------------------------------- */
+
+.infos {
+  scroll-margin-top: var(--hauteur-entete);
+  padding: 112px var(--marge);
+  background: var(--blanc-casse);
+}
+
+.infos__inner {
+  max-width: 1248px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.infos__intro {
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.infos__surtitre {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.infos__titre {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+}
+.infos__texte { color: var(--gris-texte); }
+
+/* --- Cartes « l'essentiel » --- */
+
+.infos__essentiel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.carte-info {
+  padding: 28px 24px;
+  border: 1px solid rgba(11, 31, 58, .08);
+  border-radius: var(--rayon-large);
+  background: var(--surface);
+  transition: transform var(--duree-cta) var(--sortie),
+              box-shadow var(--duree-cta) var(--sortie);
+}
+.carte-info:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(11, 31, 58, .10);
+}
+.carte-info svg {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 20px;
+  color: var(--accent);
+}
+.carte-info__titre {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gris-texte);
+}
+.carte-info__valeur {
+  margin: 4px 0 10px;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+.carte-info__texte {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--gris-texte);
+}
+
+/* --- Questions et contacts --- */
+
+.infos__corps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 56px;
+  align-items: start;
+}
+
+.infos__sous-titre,
+.infos__aide-titre {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+.infos__sous-titre { margin-bottom: 12px; }
+
+.question { border-bottom: 1px solid rgba(11, 31, 58, .12); }
+.question summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px 0;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  list-style: none;
+  transition: color 160ms var(--sortie);
+}
+.question summary::-webkit-details-marker { display: none; }
+.question summary:hover { color: var(--accent); }
+.question summary::after {
+  content: "";
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin-right: 4px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-3px) rotate(45deg);
+  transition: transform var(--duree-palier) var(--sortie);
+}
+.question[open] summary::after { transform: translateY(3px) rotate(-135deg); }
+.question__reponse {
+  padding: 0 40px 24px 0;
+  color: var(--gris-texte);
+}
+
+.infos__aide {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 32px;
+  border-radius: var(--rayon-large);
+  background: linear-gradient(160deg, #0B1F3A 0%, #12305A 100%);
+  color: #fff;
+}
+.infos__contacts { display: flex; flex-direction: column; gap: 20px; }
+.infos__contacts dt {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  opacity: .65;
+}
+.infos__contacts dd { font-size: 17px; font-weight: 500; }
+.infos__contacts a:hover { text-decoration: underline; }
+.infos__contacts .infos__precision {
+  font-size: 14px;
+  font-weight: 400;
+  opacity: .75;
+}
+.infos__aide .bouton--sombre { background: var(--surface); color: var(--bleu-nuit); }
+.infos__aide .bouton--sombre:hover { background: #E9ECF2; box-shadow: none; }
+.infos__aide .bouton--sombre:active { background: var(--accent); color: #fff; }
+
+@media (max-width: 1023px) {
+  .infos { padding: 80px var(--marge); }
+  .infos__essentiel { grid-template-columns: repeat(2, 1fr); }
+  .infos__corps { grid-template-columns: 1fr; gap: 40px; }
+}
+
+@media (max-width: 767px) {
+  .infos { padding: 64px var(--marge); }
+  .infos__inner { gap: 40px; }
+  .infos__essentiel { grid-template-columns: 1fr; gap: 12px; }
+  .carte-info { padding: 22px 20px; }
+  .carte-info:hover { transform: none; box-shadow: none; }
+  .question summary { font-size: 17px; }
+  .question__reponse { padding-right: 0; }
+  .infos__aide { padding: 24px; align-items: stretch; }
+}
+
+
+/* ---------------------------------------------------------
+   10. Responsive — bascule sur la maquette mobile 390 px
    --------------------------------------------------------- */
 
 /* Sous 1024 px, les cinq liens ne tiennent plus sur une ligne à côté de
@@ -1456,7 +2000,7 @@ html:has(.panneau:modal) { overflow: hidden; }
 
 
 /* ---------------------------------------------------------
-   8. Mouvements réduits
+   11. Mouvements réduits
       Pas de scrub : la maquette demande une image fixe et le
       titre final. main.js n'initialise alors aucun ScrollTrigger.
    --------------------------------------------------------- */

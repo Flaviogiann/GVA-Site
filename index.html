@@ -256,6 +256,332 @@
     </dialog>
   </section>
 
+  <!-- ============================================================
+       Accès & Parking
+       Contenu statique. Durées, tarifs et distances sont inventés
+       (démonstration).
+       ============================================================ -->
+  <section class="acces" id="acces" aria-labelledby="acces-titre">
+    <div class="acces__inner">
+
+      <header class="acces__intro">
+        <p class="acces__surtitre">Venir à l'aéroport</p>
+        <h2 class="acces__titre" id="acces-titre">Accès &amp; Parking</h2>
+        <p class="acces__texte">
+          Train, bus, voiture ou taxi : choisissez le trajet qui vous convient,
+          et réservez votre place de parking avant de partir.
+        </p>
+      </header>
+
+      <ul class="acces__modes" aria-label="Moyens d'accès">
+        <li class="mode">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3.5" width="12" height="13" rx="3"/><path d="M6 11h12M9.5 20.5l1.5-4M14.5 20.5 13 16.5M9 14h.01M15 14h.01"/></svg>
+          <h3 class="mode__nom">Train</h3>
+          <p class="mode__duree">7 min <span>depuis la gare centrale</span></p>
+          <p class="mode__texte">La gare est au niveau 0, sous le terminal. Départs toutes les 10 minutes en journée.</p>
+        </li>
+        <li class="mode">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="4" width="15" height="13" rx="2.5"/><path d="M4.5 12h15M7 20.5v-3.5M17 20.5v-3.5M8 8h.01M16 8h.01"/></svg>
+          <h3 class="mode__nom">Bus &amp; tram</h3>
+          <p class="mode__duree">15 min <span>depuis le centre-ville</span></p>
+          <p class="mode__texte">Arrêts devant le hall des arrivées. Un billet unique couvre aussi les transports du centre.</p>
+        </li>
+        <li class="mode">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16v-3.5l2-5A2 2 0 0 1 7.9 6h8.2a2 2 0 0 1 1.9 1.5l2 5V16"/><path d="M3.5 16h17v2.5h-17zM7.5 12.5h.01M16.5 12.5h.01"/></svg>
+          <h3 class="mode__nom">Voiture</h3>
+          <p class="mode__duree">20 min <span>depuis le centre-ville</span></p>
+          <p class="mode__texte">Sortie d'autoroute signalée « Aéroport ». Trois parkings à moins de 10 minutes du terminal.</p>
+        </li>
+        <li class="mode">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5h6M12 4v2.5"/><path d="M4 16v-3.5l2-5A2 2 0 0 1 7.9 6.5h8.2a2 2 0 0 1 1.9 1.5l2 4.5V16"/><path d="M3.5 16h17v2.5h-17zM7.5 12.5h.01M16.5 12.5h.01"/></svg>
+          <h3 class="mode__nom">Taxi &amp; VTC</h3>
+          <p class="mode__duree">15 min <span>depuis le centre-ville</span></p>
+          <p class="mode__texte">Station devant les arrivées, et zone de dépose rapide devant les départs, niveau 1.</p>
+        </li>
+      </ul>
+
+      <div class="parking">
+        <header class="parking__intro">
+          <h3 class="parking__titre">Se garer</h3>
+          <p class="parking__texte">
+            Réservez en ligne : le tarif est garanti, et la barrière s'ouvre
+            avec votre plaque d'immatriculation.
+          </p>
+        </header>
+
+        <ul class="parking__liste">
+          <li class="place">
+            <p class="place__nom">P1 · Court séjour</p>
+            <p class="place__prix">4 CHF <span>/ heure</span></p>
+            <dl class="place__infos">
+              <div><dt>Distance</dt><dd>2 min à pied</dd></div>
+              <div><dt>Idéal pour</dt><dd>Accueillir ou déposer</dd></div>
+            </dl>
+          </li>
+          <li class="place place--conseille">
+            <p class="place__badge">Le plus choisi</p>
+            <p class="place__nom">P2 · Longue durée</p>
+            <p class="place__prix">28 CHF <span>/ jour</span></p>
+            <dl class="place__infos">
+              <div><dt>Distance</dt><dd>6 min à pied</dd></div>
+              <div><dt>Idéal pour</dt><dd>Un week-end ou plus</dd></div>
+            </dl>
+          </li>
+          <li class="place">
+            <p class="place__nom">P3 · Économique</p>
+            <p class="place__prix">14 CHF <span>/ jour</span></p>
+            <dl class="place__infos">
+              <div><dt>Distance</dt><dd>Navette gratuite, 8 min</dd></div>
+              <div><dt>Idéal pour</dt><dd>Les longs séjours</dd></div>
+            </dl>
+          </li>
+        </ul>
+
+        <a class="bouton bouton--sombre" href="#infos">Réserver une place</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Boutiques & restaurants
+       Contenu statique. Le filtre est un groupe de boutons radio
+       lu par le CSS (:has), sans JavaScript.
+       Enseignes, horaires et descriptions sont inventés (démonstration).
+       ============================================================ -->
+  <section class="boutiques" id="boutiques" aria-labelledby="boutiques-titre">
+    <div class="boutiques__inner">
+
+      <header class="boutiques__intro">
+        <p class="boutiques__surtitre">Après la sûreté</p>
+        <h2 class="boutiques__titre" id="boutiques-titre">Boutiques &amp; restaurants</h2>
+        <p class="boutiques__texte">
+          Horlogerie, chocolats, une table pour patienter : tout se trouve
+          en zone réservée, à quelques minutes de votre porte.
+        </p>
+      </header>
+
+      <fieldset class="filtre">
+        <legend class="visuellement-masque">Filtrer par type</legend>
+        <label class="filtre__choix">
+          <input type="radio" name="filtre-boutiques" value="tout" checked>
+          <span>Tout</span>
+        </label>
+        <label class="filtre__choix">
+          <input type="radio" name="filtre-boutiques" value="boutique">
+          <span>Boutiques</span>
+        </label>
+        <label class="filtre__choix">
+          <input type="radio" name="filtre-boutiques" value="restaurant">
+          <span>Restaurants</span>
+        </label>
+      </fieldset>
+
+      <ul class="boutiques__liste">
+        <li class="magasin" data-type="boutique">
+          <p class="magasin__type">Boutique</p>
+          <h3 class="magasin__nom">Duty Free Genève</h3>
+          <p class="magasin__texte">Horlogerie, parfums, spiritueux et chocolats suisses, aux prix hors taxes. Commande en ligne à retirer au comptoir.</p>
+          <dl class="magasin__infos">
+            <div><dt>Étage</dt><dd>Niveau 2</dd></div>
+            <div><dt>Horaires</dt><dd>05:00–22:30</dd></div>
+          </dl>
+        </li>
+        <li class="magasin" data-type="boutique">
+          <p class="magasin__type">Boutique</p>
+          <h3 class="magasin__nom">Chocolaterie du Léman</h3>
+          <p class="magasin__texte">Tablettes, truffes et coffrets emballés pour le voyage. Dégustation offerte le matin.</p>
+          <dl class="magasin__infos">
+            <div><dt>Étage</dt><dd>Niveau 2</dd></div>
+            <div><dt>Horaires</dt><dd>06:00–22:00</dd></div>
+          </dl>
+        </li>
+        <li class="magasin" data-type="boutique">
+          <p class="magasin__type">Boutique</p>
+          <h3 class="magasin__nom">Relais presse</h3>
+          <p class="magasin__texte">Journaux, magazines, livres, chargeurs et adaptateurs de prise pour toutes les destinations.</p>
+          <dl class="magasin__infos">
+            <div><dt>Étage</dt><dd>Niveau 1</dd></div>
+            <div><dt>Horaires</dt><dd>04:30–22:30</dd></div>
+          </dl>
+        </li>
+        <li class="magasin" data-type="boutique">
+          <p class="magasin__type">Boutique</p>
+          <h3 class="magasin__nom">Pharmacie du voyageur</h3>
+          <p class="magasin__texte">Médicaments, trousses de voyage, protection solaire et produits au format cabine (100 ml).</p>
+          <dl class="magasin__infos">
+            <div><dt>Étage</dt><dd>Niveau 1</dd></div>
+            <div><dt>Horaires</dt><dd>06:00–21:00</dd></div>
+          </dl>
+        </li>
+        <li class="magasin" data-type="restaurant">
+          <p class="magasin__type">Restaurant</p>
+          <h3 class="magasin__nom">Café des Bergues</h3>
+          <p class="magasin__texte">Café, viennoiseries et petit-déjeuner suisse dès l'ouverture, à emporter ou sur place.</p>
+          <dl class="magasin__infos">
+            <div><dt>Étage</dt><dd>Niveau 1</dd></div>
+            <div><dt>Horaires</dt><dd>04:30–21:00</dd></div>
+          </dl>
+        </li>
+        <li class="magasin" data-type="restaurant">
+          <p class="magasin__type">Restaurant</p>
+          <h3 class="magasin__nom">Brasserie Alpine</h3>
+          <p class="magasin__texte">Fondue, röstis et filets de perche. Une vraie table avec vue sur les pistes.</p>
+          <dl class="magasin__infos">
+            <div><dt>Étage</dt><dd>Niveau 2</dd></div>
+            <div><dt>Horaires</dt><dd>10:30–22:00</dd></div>
+          </dl>
+        </li>
+        <li class="magasin" data-type="restaurant">
+          <p class="magasin__type">Restaurant</p>
+          <h3 class="magasin__nom">Pause express</h3>
+          <p class="magasin__texte">Sandwichs, salades et plats chauds prêts en trois minutes, pour les correspondances courtes.</p>
+          <dl class="magasin__infos">
+            <div><dt>Étage</dt><dd>Niveau 2</dd></div>
+            <div><dt>Horaires</dt><dd>05:00–22:30</dd></div>
+          </dl>
+        </li>
+      </ul>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Infos pratiques
+       Contenu statique, sans JavaScript : les questions sont des
+       <details> exclusifs (même attribut name).
+       Textes, horaires et numéros sont inventés (démonstration).
+       ============================================================ -->
+  <section class="infos" id="infos" aria-labelledby="infos-titre">
+    <div class="infos__inner">
+
+      <header class="infos__intro">
+        <p class="infos__surtitre">Avant de partir</p>
+        <h2 class="infos__titre" id="infos-titre">Infos pratiques</h2>
+        <p class="infos__texte">
+          L'essentiel pour arriver à l'heure, passer la sûreté sans stress
+          et voyager l'esprit tranquille.
+        </p>
+      </header>
+
+      <ul class="infos__essentiel" aria-label="L'essentiel en un coup d'œil">
+        <li class="carte-info">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <h3 class="carte-info__titre">Arriver à temps</h3>
+          <p class="carte-info__valeur">2 h avant</p>
+          <p class="carte-info__texte">pour un vol court-courrier, 3 h pour un vol long-courrier.</p>
+        </li>
+        <li class="carte-info">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="7" width="12" height="13" rx="2"/><path d="M9.5 7V4.5h5V7M9.5 11v5M14.5 11v5"/></svg>
+          <h3 class="carte-info__titre">Dépôt des bagages</h3>
+          <p class="carte-info__valeur">40 min avant</p>
+          <p class="carte-info__texte">la fermeture du comptoir, ou en ligne dès 24 h avant le vol.</p>
+        </li>
+        <li class="carte-info">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5h6M10 3.5v4L6.5 18a2 2 0 0 0 1.9 2.5h7.2a2 2 0 0 0 1.9-2.5L14 7.5v-4"/><path d="M8.2 14h7.6"/></svg>
+          <h3 class="carte-info__titre">Liquides en cabine</h3>
+          <p class="carte-info__valeur">100 ml</p>
+          <p class="carte-info__texte">par flacon, dans un sachet transparent refermable.</p>
+        </li>
+        <li class="carte-info">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9.5" cy="11" r="2"/><path d="M6.8 16c.6-1.6 1.7-2.3 2.7-2.3s2.1.7 2.7 2.3M14.5 10h3M14.5 13h3"/></svg>
+          <h3 class="carte-info__titre">Pièce d'identité</h3>
+          <p class="carte-info__valeur">En cours de validité</p>
+          <p class="carte-info__texte">passeport ou carte d'identité, selon votre destination.</p>
+        </li>
+      </ul>
+
+      <div class="infos__corps">
+
+        <div class="infos__questions">
+          <h3 class="infos__sous-titre">Questions fréquentes</h3>
+
+          <details class="question" name="infos" open>
+            <summary>Que puis-je emporter en cabine&nbsp;?</summary>
+            <div class="question__reponse">
+              <p>
+                Un bagage à main jusqu'à 8 kg et un petit article personnel
+                (sac à main, ordinateur). Les liquides, gels et crèmes doivent
+                être en flacons de 100 ml maximum, réunis dans un sachet
+                transparent refermable. Sortez ordinateurs, tablettes et gros
+                appareils électroniques du sac au contrôle.
+              </p>
+            </div>
+          </details>
+
+          <details class="question" name="infos">
+            <summary>Quels documents dois-je présenter&nbsp;?</summary>
+            <div class="question__reponse">
+              <p>
+                Une pièce d'identité en cours de validité, et un visa si votre
+                destination l'exige. Les mineurs voyageant sans leurs parents
+                peuvent avoir besoin d'une autorisation écrite. Vérifiez les
+                conditions d'entrée de votre destination avant le départ.
+              </p>
+            </div>
+          </details>
+
+          <details class="question" name="infos">
+            <summary>Comment fonctionne l'assistance aux personnes à mobilité réduite&nbsp;?</summary>
+            <div class="question__reponse">
+              <p>
+                Le service est gratuit. Demandez-le à votre compagnie au moins
+                48 heures avant le départ : une équipe vous accueille à
+                l'entrée du terminal ou à la borne d'appel, et vous accompagne
+                jusqu'à la porte d'embarquement.
+              </p>
+            </div>
+          </details>
+
+          <details class="question" name="infos">
+            <summary>J'ai perdu un objet à l'aéroport</summary>
+            <div class="question__reponse">
+              <p>
+                Le bureau des objets trouvés se trouve au niveau 0, près de
+                la sortie des arrivées. Déclarez votre perte en ligne en
+                décrivant l'objet : les objets retrouvés sont conservés
+                trois mois.
+              </p>
+            </div>
+          </details>
+
+          <details class="question" name="infos">
+            <summary>Y a-t-il du Wi-Fi gratuit&nbsp;?</summary>
+            <div class="question__reponse">
+              <p>
+                Oui, dans tout le terminal, sans inscription et sans limite
+                de durée. Connectez-vous au réseau « GVA Free Wi-Fi ».
+              </p>
+            </div>
+          </details>
+        </div>
+
+        <aside class="infos__aide" aria-labelledby="infos-aide-titre">
+          <h3 class="infos__aide-titre" id="infos-aide-titre">Besoin d'aide&nbsp;?</h3>
+          <dl class="infos__contacts">
+            <div>
+              <dt>Renseignements</dt>
+              <dd><a href="tel:+41220000000">+41 22 000 00 00</a></dd>
+              <dd class="infos__precision">Tous les jours, 05:00–23:00</dd>
+            </div>
+            <div>
+              <dt>Accueil PMR</dt>
+              <dd><a href="tel:+41220000001">+41 22 000 00 01</a></dd>
+              <dd class="infos__precision">Sur réservation, 48 h à l'avance</dd>
+            </div>
+            <div>
+              <dt>Objets trouvés</dt>
+              <dd>Niveau 0, sortie des arrivées</dd>
+              <dd class="infos__precision">Lundi–vendredi, 08:00–18:00</dd>
+            </div>
+          </dl>
+          <a class="bouton bouton--sombre" href="#vols">Suivre mon vol</a>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <script src="js/vendor/gsap.min.js"></script>
